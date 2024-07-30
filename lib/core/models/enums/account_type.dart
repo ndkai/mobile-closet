@@ -1,0 +1,6 @@
+
+enum AccountType{
+  personal,
+  business
+}
+

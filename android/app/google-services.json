@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "652959660950",
+    "project_id": "swiftui-todolist-2b27f",
+    "storage_bucket": "swiftui-todolist-2b27f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652959660950:android:8faae0c873bb20587cfbb7",
+        "android_client_info": {
+          "package_name": "com.example.clean_architechture"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_Z-wa4MCL3F6_gU7YbuZj8chImc0c3vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
