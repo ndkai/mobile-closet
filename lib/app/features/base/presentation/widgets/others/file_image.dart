@@ -12,15 +12,17 @@ class AppFileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     try{
       final file = File(path!);
+      print("????2 ${path}");
       String contents = file.readAsStringSync();
       return Image.file(File(path!), height: height, width: width);
     } catch(e){
+      print("???? ${e}");
     }
     return Container(
       height: height,
       width: width,
       decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: Colors.red,
           borderRadius: BorderRadius.circular(8)
       ),
     );

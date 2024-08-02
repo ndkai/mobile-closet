@@ -15,7 +15,10 @@ class DIService {
 
   Future init() async {
     // #region bloc
-    sl.registerLazySingleton<CategoryBloc>(() => CategoryBloc(sl()));
+    sl.registerLazySingleton<CreateCategoryBloc>(() => CreateCategoryBloc(sl()));
+    sl.registerLazySingleton<GetCategoryBloc>(() => GetCategoryBloc(sl()));
+    sl.registerLazySingleton<UpdateCategoryBloc>(() => UpdateCategoryBloc(sl()));
+    sl.registerLazySingleton<DeleteCategoryBloc>(() => DeleteCategoryBloc(sl()));
     // #endregion
 
     // #region data

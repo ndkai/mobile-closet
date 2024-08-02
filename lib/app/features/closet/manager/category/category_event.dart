@@ -18,3 +18,9 @@ class CreateCategoryEvent extends CategoryEvent{
 
   CreateCategoryEvent(this.category);
 }
+
+class DeleteCategoryEvent extends CategoryEvent{
+  final int id;
+
+  DeleteCategoryEvent(this.id);
+}

@@ -7,22 +7,74 @@ import '../../../../data/category/local_category_datasource.dart';
 part 'category_event.dart';
 part 'category_state.dart';
 
-class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+class CreateCategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final LocalCategoryDataSource localCategoryDataSource;
-  CategoryBloc(this.localCategoryDataSource) : super(CategoryState(data: const [])) {
+  CreateCategoryBloc(this.localCategoryDataSource) : super(CategoryInitState()) {
     on<CreateCategoryEvent>(_create);
-    on<GetCategoriesEvent>(_getList);
   }
 
   void _create(CreateCategoryEvent event, Emitter<CategoryState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(CategoryLoadingState());
     final data = await localCategoryDataSource.addCategories(event.category);
-    emit(state.copyWith(createError: !data, isLoading: false));
+    if(data){
+      emit(CategoryCreateSuccessState());
+    } else {
+      emit(CategoryErrorState("Error"));
+    }
+
+  }
+}
+
+class UpdateCategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+  final LocalCategoryDataSource localCategoryDataSource;
+  UpdateCategoryBloc(this.localCategoryDataSource) : super(CategoryInitState()) {
+    on<CreateCategoryEvent>(_create);
   }
 
-  void _getList(GetCategoriesEvent event, Emitter<CategoryState> emit) async {
-    emit(state.copyWith(isLoading: true));
+  void _create(CreateCategoryEvent event, Emitter<CategoryState> emit) async {
+    emit(CategoryLoadingState());
+    final data = await localCategoryDataSource.updateCategories(event.category);
+    if(data){
+      emit(CategoryUpdateSuccessState());
+    } else {
+      emit(CategoryErrorState("Error"));
+    }
+
+  }
+}
+
+class DeleteCategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+  final LocalCategoryDataSource localCategoryDataSource;
+  DeleteCategoryBloc(this.localCategoryDataSource) : super(CategoryInitState()) {
+    on<DeleteCategoryEvent>(_create);
+  }
+
+  void _create(DeleteCategoryEvent event, Emitter<CategoryState> emit) async {
+    emit(CategoryLoadingState());
+    final data = await localCategoryDataSource.deleteCategories(event.id);
+    if(data){
+      emit(CategoryDeleteSuccessState());
+    } else {
+      emit(CategoryErrorState("Error"));
+    }
+
+  }
+}
+
+class GetCategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+  final LocalCategoryDataSource localCategoryDataSource;
+  GetCategoryBloc(this.localCategoryDataSource) : super(CategoryInitState()) {
+    on<GetCategoriesEvent>(_create);
+  }
+
+  void _create(GetCategoriesEvent event, Emitter<CategoryState> emit) async {
+    emit(CategoryLoadingState());
     final data = await localCategoryDataSource.getCategories();
-    emit(state.copyWith(createError: data.isEmpty, isLoading: false, data: data));
+    if(data.isNotEmpty){
+      emit(CategoryGetSuccessState(data));
+    } else {
+      emit(CategoryErrorState("Error"));
+    }
+
   }
 }

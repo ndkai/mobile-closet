@@ -1,38 +1,19 @@
 part of 'category_bloc.dart';
 
-class CategoryState {
-  bool isLoading;
-  List<Category> data;
-  bool? createError;
-  bool? updateError;
-  bool? getListError;
-  bool? getError;
+abstract class CategoryState {}
+class CategoryInitState extends CategoryState{}
 
-  CategoryState({
-    this.isLoading = false,
-    required this.data,
-    this.createError = false ,
-    this.updateError = false ,
-    this.getListError = false,
-    this.getError = false,
-  });
+class CategoryLoadingState extends CategoryState{}
+class CategoryErrorState extends CategoryState{
+  final String msg;
 
-  CategoryState copyWith({
-    bool? isLoading,
-    List<Category>? data,
-    String? error,
-    bool? createError,
-    bool? updateError,
-    bool? getListError,
-    bool? getError,
-  }) {
-    return CategoryState(
-      isLoading: isLoading ?? this.isLoading,
-      data: data ?? this.data,
-      createError: createError ?? this.createError,
-      updateError: updateError ?? this.updateError,
-      getListError: getListError ?? this.getListError,
-      getError: getError ?? this.getError,
-    );
-  }
+  CategoryErrorState(this.msg);
 }
+class CategoryCreateSuccessState extends CategoryState{}
+class CategoryGetSuccessState extends CategoryState{
+  final List<Category> categories;
+
+  CategoryGetSuccessState(this.categories);
+}
+class CategoryDeleteSuccessState extends CategoryState{}
+class CategoryUpdateSuccessState extends CategoryState{}

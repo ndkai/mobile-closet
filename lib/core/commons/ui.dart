@@ -135,8 +135,8 @@ class UI {
   }
 
 
-  static void showCreateNewCategory(BuildContext context){
-    showDialog(context: context, builder: (context){
+  static Future<void> showCreateNewCategory(BuildContext context) async {
+    await  showDialog(context: context, builder: (context){
       return const Dialog(
           child: AddNewCategoryDialog()
       );

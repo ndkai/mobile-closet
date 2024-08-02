@@ -10,6 +10,10 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+    <string>This app needs access to the documents folder to save files.</string>
+    <key>NSFileCreationUsageDescription</key>
+    <string>This app needs permission to create files.</string>
 	<key>CFBundleDisplayName</key>
 	<string>DNBC</string>
 	<key>CFBundleExecutable</key>

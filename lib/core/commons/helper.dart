@@ -40,15 +40,20 @@ class Helper{
 
   }
 
-  static Future<void> saveFile(String directory, String fileName, String content) async {
+  static Future<String?> saveFile(String dir, String fileName, File saveFile) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/$directory/$fileName';
-      final file = File(filePath);
-      await file.writeAsString(content);
+      final filePath = '${directory.path}/$dir/$fileName';
+      // final file = File(filePath);
+      // await file.parent.create(recursive: true);
+      await saveFile.copy(filePath);
+      // await file.writeAsString(saveFile.readAsStringSync());
       print('File saved: $filePath');
+      print('File saved: ${saveFile.path}');
+      return filePath;
     } catch (e) {
       print('Error saving file: $e');
+      return null;
     }
   }
 }

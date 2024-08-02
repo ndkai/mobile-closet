@@ -77,7 +77,9 @@ class _SlidableState extends State<Slidable> {
                                 fontSize: 13)), overflow: TextOverflow.ellipsis,)
                       ],
                     ),
-                  ),
+                  ).onClick((){
+                    e.onTap();
+                  }),
                   const Gap(8),
                 ],
               )).toList(),

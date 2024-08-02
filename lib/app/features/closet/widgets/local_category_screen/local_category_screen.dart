@@ -5,38 +5,58 @@ class _LocalCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DIService.sl<CategoryBloc>()..add(GetCategoriesEvent()),
-      child: BaseBackScreen(
-        title: "Categories",
-        additionWidgets: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(.2),
-              borderRadius: BorderRadius.circular(8)
-            ),
-            child: const Icon(Icons.add, color: Colors.blue,),
-          ).onClick((){
-            UI.showCreateNewCategory(context);
-          }),
-          const Gap(16)
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => DIService.sl<GetCategoryBloc>()..add(GetCategoriesEvent())),
+          BlocProvider(create: (_) => DIService.sl<CreateCategoryBloc>()),
+          BlocProvider(create: (_) => DIService.sl<UpdateCategoryBloc>()),
+          BlocProvider(create: (_) => DIService.sl<DeleteCategoryBloc>())
         ],
-        child: BlocConsumer<CategoryBloc, CategoryState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return _buildSkeleton();
-            } else {
-              if (state.data.isNotEmpty) {
-                  return _ListBuilder(categories:state.data);
+        child: BaseBackScreen(
+          title: "Categories",
+          additionWidgets: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(.2),
+                  borderRadius: BorderRadius.circular(8)),
+              child: const Icon(
+                Icons.add,
+                color: Colors.blue,
+              ),
+            ).onClick(() {
+              UI.showCreateNewCategory(context).then((value) => context.read<GetCategoryBloc>().add(GetCategoriesEvent()));
+            }),
+            const Gap(16)
+          ],
+          child: BlocConsumer<GetCategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryLoadingState) {
+                return _buildSkeleton();
               }
-            }
-            return firstCategory(context);
-          },
-          listener: (BuildContext context, CategoryState state) {},
-        ),
-      ),
-    );
+
+              if (state is CategoryGetSuccessState) {
+                return Column(
+                  children: [
+                    BlocListener<DeleteCategoryBloc, CategoryState>(listener: (context, state){
+                      print("lolol ${state}");
+                      if(state is CategoryDeleteSuccessState){
+                        context.read<GetCategoryBloc>().add(GetCategoriesEvent());
+                      }
+                      if(state is CategoryErrorState){
+
+                      }
+
+                    }, child: SizedBox(),),
+                    Expanded(child: _ListBuilder(categories: state.categories))
+                  ],
+                );
+              }
+              return firstCategory(context);
+            },
+            listener: (BuildContext context, CategoryState state) {},
+          ),
+        ));
   }
 
   Widget firstCategory(BuildContext context) {
@@ -47,6 +67,7 @@ class _LocalCategoryScreen extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: Column(
         children: [
+
           const Gap(16),
           Text(
             "Hình như bạn vẫn chưa có loại đồ nào nhỉ?",
@@ -92,8 +113,6 @@ class _LocalCategoryScreen extends StatelessWidget {
       ),
     );
   }
-
-
 
   Widget _buildSkeleton() {
     return Skeletonizer(

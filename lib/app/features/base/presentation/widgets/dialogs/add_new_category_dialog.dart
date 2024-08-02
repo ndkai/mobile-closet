@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:clean_architechture/app/features/base/presentation/widgets/text_field/custom_text_form_field.dart';
@@ -13,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:toastification/toastification.dart';
 import '../../../../../../config/size/size_config.dart';
+import '../../../../../../core/commons/helper.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../models/app_clothes.dart';
 import '../buttons/positive_button.dart';
@@ -35,13 +37,13 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => DIService.sl<CategoryBloc>(),
+      create: (_) => DIService.sl<CreateCategoryBloc>(),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        child: BlocConsumer<CategoryBloc, CategoryState>(
+        child: BlocConsumer<CreateCategoryBloc, CategoryState>(
           builder: (context, state) {
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -73,7 +75,7 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
                     ),
                     const Gap(16),
                     PositiveButton(
-                        onTap: () {
+                        onTap: () async {
                           if (categoryNameEdt.text.isEmpty) {
                             setState(() {
                               error = "Please give it a name";
@@ -82,11 +84,16 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
                             setState(() {
                               error = "";
                             });
+                            UI.showLoadingDialog(context, color: null);
                             category.name = categoryNameEdt.text;
-
+                            if(image != null){
+                              category.filePath = await Helper.saveFile("category","${category.name}${category.id}.${image!.path.split(".").last}", image!);
+                              print("hay za ${category.filePath}");
+                            }
                             context
-                                .read<CategoryBloc>()
+                                .read<CreateCategoryBloc>()
                                 .add(CreateCategoryEvent(category));
+                            Navigator.pop(context);
                           }
                         },
                         width: SizeConfig.screenWidth!,
@@ -99,19 +106,18 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
             );
           },
           listener: (context, state) {
-            print("state ${state.isLoading}");
-            if (state.isLoading) {
-              UI.showLoadingDialog(context, color: null);
-            } else {
-              Navigator.of(context).pop();
-              if (state.createError!) {
-                setState(() {
-                  error = 'Please try again later';
-                });
-                return;
-              }
-              Navigator.of(context).pop();
+            if(state is CategoryLoadingState){
+
+            }
+            if(state is CategoryCreateSuccessState){
+              Navigator.pop(context);
               UI.showSuccessToast(context, "Create category success");
+            }
+            if(state is CategoryErrorState){
+              Navigator.pop(context);
+              setState(() {
+                error = 'Please try again later';
+              });
             }
           },
         ),
