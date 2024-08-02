@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +14,6 @@ import 'generated/l10n.dart';
 import 'package:timezone/data/latest.dart' as tz;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await init();
   await DIService().init();
   await setUpAppAgain();
   Bloc.observer = AppBlocObserver();

@@ -2,10 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import '../api/api_consumer.dart';
-import '../api/status_code.dart';
-import '../error/exceptions.dart';
-
 class DioService {
   final Dio dio;
 
@@ -55,39 +51,6 @@ class DioService {
       var data = List.from(response.data);
       // ignore: avoid_print
       print("RESPONSE: $data");
-    }
-  }
-
-
-  dynamic _handleDioError(DioException error) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        throw const FetchDataException();
-      case DioExceptionType.badResponse:
-        switch (error.response?.statusCode) {
-          case StatusCode.badRequest:
-            throw const BadRequestException();
-          case StatusCode.unauthorized:
-          case StatusCode.forbidden:
-            throw const UnauthorizedException();
-          case StatusCode.notFound:
-            throw const NotFoundException();
-          case StatusCode.conflict:
-            throw const ConflictException();
-          case StatusCode.internalServerError:
-            throw const InternalServerErrorException();
-        }
-        break;
-      case DioExceptionType.cancel:
-        break;
-      case DioExceptionType.unknown:
-        throw const NoInternetConnectionException();
-      case DioExceptionType.badCertificate:
-        throw const BadCertificateException();
-      case DioExceptionType.connectionError:
-        throw const NoInternetConnectionException();
     }
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 class Helper{
 
   static bool isTokenExpired(int expiryTimestamp) {
@@ -35,5 +38,17 @@ class Helper{
         return currency;
     }
 
+  }
+
+  static Future<void> saveFile(String directory, String fileName, String content) async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/$directory/$fileName';
+      final file = File(filePath);
+      await file.writeAsString(content);
+      print('File saved: $filePath');
+    } catch (e) {
+      print('Error saving file: $e');
+    }
   }
 }

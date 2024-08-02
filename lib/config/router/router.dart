@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:clean_architechture/config/router/routes.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/base/presentation/pages/root_view.dart';
+import '../../app/features/base/presentation/pages/root_view.dart';
+
 
 
 final GoRouter router = GoRouter(routes: [

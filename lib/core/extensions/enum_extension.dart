@@ -1,8 +1,5 @@
 import 'package:clean_architechture/core/extensions/string_extension.dart';
-import 'package:flutter/material.dart';
-
 import '../../generated/l10n.dart';
-import '../../share_widgets/card_enum.dart';
 import '../models/enums/account_type.dart';
 import '../models/enums/input_type.dart';
 
@@ -57,50 +54,3 @@ extension InputTypeExtension on InputType {
   }
 }
 
-extension CardStatusEnumExtension on CardStatusEnum {
-  static CardStatusEnum getCardStatusEnum(String? status) {
-    switch (status) {
-      case "Suspend":
-        return CardStatusEnum.Suspend;
-      case "Hold":
-        return CardStatusEnum.Hold;
-      case "Inactive":
-        return CardStatusEnum.Inactive;
-      case "Lost":
-        return CardStatusEnum.Lost;
-      case "Stolen":
-        return CardStatusEnum.Stolen;
-      case "Expired":
-        return CardStatusEnum.Expired;
-      case "Issued":
-        return CardStatusEnum.Issued;
-      case "Normal":
-        return CardStatusEnum.Normal;
-      default:
-        throw CardStatusEnum.Unknow;
-    }
-  }
-
-  Color mapStatusColor(CardStatusEnum? status) {
-    switch (status) {
-      case CardStatusEnum.Suspend:
-        return Colors.orange;
-      case CardStatusEnum.Hold:
-        return Colors.orange;
-      case CardStatusEnum.Inactive:
-        return Colors.blue;
-      case CardStatusEnum.Lost:
-        return Colors.red;
-      case CardStatusEnum.Stolen:
-        return Colors.red;
-      case CardStatusEnum.Expired:
-        return Colors.red;
-      case CardStatusEnum.Issued:
-        return Colors.green;
-      case CardStatusEnum.Normal:
-        return const Color(0xFF007AFF);
-      default:
-        return Colors.blue;
-    }
-  }
-}
