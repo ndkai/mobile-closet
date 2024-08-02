@@ -9,17 +9,26 @@ class _LocalCategoryScreen extends StatelessWidget {
       create: (_) => DIService.sl<CategoryBloc>()..add(GetCategoriesEvent()),
       child: BaseBackScreen(
         title: "Categories",
+        additionWidgets: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(.2),
+              borderRadius: BorderRadius.circular(8)
+            ),
+            child: const Icon(Icons.add, color: Colors.blue,),
+          ).onClick((){
+            UI.showCreateNewCategory(context);
+          }),
+          const Gap(16)
+        ],
         child: BlocConsumer<CategoryBloc, CategoryState>(
           builder: (context, state) {
             if (state.isLoading) {
               return _buildSkeleton();
             } else {
               if (state.data.isNotEmpty) {
-                return ListView.builder(
-                    itemCount: state.data.length,
-                    itemBuilder: (context, index) {
-                      return _buildItem(state.data[index]);
-                    });
+                  return _ListBuilder(categories:state.data);
               }
             }
             return firstCategory(context);
@@ -84,29 +93,7 @@ class _LocalCategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(Category category) {
-    return  Slidable(child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Áo mặc đi bơi",
-              style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16))),
-          Image.asset(
-            Assets.iconsAddNew,
-            width: 50,
-          )
-        ],
-      ),
-    ));
-  }
+
 
   Widget _buildSkeleton() {
     return Skeletonizer(

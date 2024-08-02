@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../app/features/base/presentation/widgets/bottom_sheets/datetime_range_picker/datetime_range_picker_builder.dart';
+import '../../app/features/base/presentation/widgets/dialogs/add_new_category_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/confirm_dialog_builder.dart';
 import '../../app/features/base/presentation/widgets/dialogs/loading_dialog.dart';
 import '../../config/theme/theme.dart';
@@ -134,32 +135,12 @@ class UI {
   }
 
 
-  static  (Color, Color) getCardOrderColor(String status){
-    Color  color = const Color(0xFFE58600);
-    Color  bgColor = const Color(0xFFFFF4E5);
-    switch (status) {
-      case 'Approved':
-        color = const Color(0xFF007AFF);
-        bgColor = const Color(0xFFEDF5FF);
-        break;
-      case 'Processed':
-        color = const Color(0xFF007D3A);
-        bgColor = const Color(0xFFD7FAE0);
-        break;
-      case 'Rejected by DNBC':
-        color = const Color(0xFFB5010A);
-        bgColor = const Color(0xFFFFF0F1);
-        break;
-      case 'Rejected by InterCash':
-        color = const Color(0xFFB5010A);
-        bgColor = const Color(0xFFFFF0F1);
-        break;
-      case 'Pending':
-        color = const Color(0xFFE58600);
-        bgColor = const Color(0xFFFFF4E5);
-        break;
-    }
-    return (color, bgColor);
+  static void showCreateNewCategory(BuildContext context){
+    showDialog(context: context, builder: (context){
+      return const Dialog(
+          child: AddNewCategoryDialog()
+      );
+    });
   }
 
   static Future<void> showChooseFileMethodsSheet(BuildContext appContext, {required ValueChanged<List<File>> onChange}) async {

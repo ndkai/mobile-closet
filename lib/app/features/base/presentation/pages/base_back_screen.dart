@@ -7,6 +7,7 @@ import '../../../../../config/theme/theme.dart';
 
 class BaseBackScreen extends StatelessWidget {
   final Widget child;
+  final List<Widget>? additionWidgets;
   final bool resizeToAvoidBottomInset;
   final String title;
 
@@ -14,7 +15,7 @@ class BaseBackScreen extends StatelessWidget {
       {super.key,
       required this.child,
       this.resizeToAvoidBottomInset = false,
-      this.title = "",
+      this.title = "", this.additionWidgets,
       });
 
   @override
@@ -22,10 +23,12 @@ class BaseBackScreen extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         appBar: AppBar(
-          leading: Container(
+          actions: additionWidgets,
+          surfaceTintColor: Colors.white,
+          leading: const SizedBox(
             height: 48,
             width: 48,
-            child: Center(child: const Icon(Icons.arrow_back_ios_new, color: Colors.blue,),),
+            child: Center(child: Icon(Icons.arrow_back_ios_new, color: Colors.blue,),),
           ).onClick(() => Navigator.pop(context)),
           title: Text(title, style: GoogleFonts.poppins(
               textStyle: const TextStyle(

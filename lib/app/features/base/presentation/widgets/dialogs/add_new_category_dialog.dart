@@ -148,6 +148,7 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
       UI.showChooseFileMethodsSheet(context, onChange: (value) {
         setState(() {
           image = value.first;
+          category.filePath = image!.path;
         });
       });
     });
@@ -177,6 +178,7 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
           ).align(Alignment.topRight).onClick(() {
             setState(() {
               image = null;
+
             });
           }),
         ),

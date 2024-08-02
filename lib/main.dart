@@ -9,25 +9,14 @@ import 'config/router/router.dart';
 import 'config/theme/bloc/bloc.dart';
 import 'config/theme/theme.dart';
 import 'core/services/di_service.dart';
-import 'core/utils/bloc_observer.dart';
 import 'generated/l10n.dart';
 import 'package:timezone/data/latest.dart' as tz;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DIService().init();
-  await setUpAppAgain();
-  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
-
-Future<void> setUpAppAgain() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  // prefs.remove(SharedPreferencesKey.userAuth);
-  // prefs.remove(SharedPreferencesKey.home);
-  //  AuthEntity.enableLoginRequired();
- // prefs.clear();
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

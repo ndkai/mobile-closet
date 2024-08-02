@@ -48,17 +48,11 @@ class _Filter extends StatelessWidget {
         Text("Add new", style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12)),)
       ],
     ).padding(const EdgeInsets.only(right: 8)).onClick((){
-      showAddNewStuffDialog(context);
+      // showAddNewStuffDialog(context);
     });
   }
 
 
-  void showAddNewStuffDialog(BuildContext context){
-    showDialog(context: context, builder: (context){
-        return const Dialog(
-          child: AddNewCategoryDialog()
-        );
-    });
-  }
+
 
 }

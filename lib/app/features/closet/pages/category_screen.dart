@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:clean_architechture/app/features/base/presentation/pages/base_back_screen.dart';
+import 'package:clean_architechture/app/features/base/presentation/widgets/search/search_widget.dart';
 import 'package:clean_architechture/app/features/closet/manager/category/category_bloc.dart';
 import 'package:clean_architechture/config/size/size_config.dart';
 import 'package:clean_architechture/core/extensions/widget_extension.dart';
@@ -10,10 +13,13 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/commons/Ui.dart';
 import '../../../../generated/assets.dart';
 import '../../base/presentation/widgets/dialogs/add_new_category_dialog.dart';
+import '../../base/presentation/widgets/others/file_image.dart';
 import '../../base/presentation/widgets/slidable_widget/slidable.dart';
 part '../widgets/local_category_screen/local_category_screen.dart';
+part '../widgets/local_category_screen/list_builder.dart';
 class CategoryManageScreen extends StatelessWidget {
   const CategoryManageScreen({super.key});
 
