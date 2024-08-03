@@ -43,14 +43,17 @@ class Helper{
   static Future<String?> saveFile(String dir, String fileName, File saveFile) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/$dir/$fileName';
-      // final file = File(filePath);
-      // await file.parent.create(recursive: true);
-      await saveFile.copy(filePath);
+      final filePath = '${directory.path}/$dir';
+      Directory targetDir = Directory(filePath);
+      if(targetDir.existsSync()){
+        await targetDir.create(recursive: true);
+      }
+      String newFilePath = '${targetDir.path}/${fileName}';
+      File newFile = await saveFile.copy(newFilePath);
       // await file.writeAsString(saveFile.readAsStringSync());
-      print('File saved: $filePath');
-      print('File saved: ${saveFile.path}');
-      return filePath;
+      print('File saved: ${newFile.readAsBytesSync()}');
+      print('File saved: $newFilePath');
+      return newFilePath;
     } catch (e) {
       print('Error saving file: $e');
       return null;

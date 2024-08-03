@@ -101,17 +101,15 @@ class _LocalRootViewState extends State<_LocalRootView> {
 
   Widget _getCurrentPage() {
     setState(() {});
-    switch (currentIndex) {
-      case 0:
-        return const ClosetScreen();
-      case 1:
-        return const CategoryManageScreen();
-      case 2:
-        return const HomeScreen();
-      case 3:
-        return const HomeScreen();
-      default:
-        return const HomeScreen();
-    }
+
+    return IndexedStack(
+      index: currentIndex,
+      children: const [
+        ClosetScreen(),
+        CategoryManageScreen(),
+        CategoryManageScreen(),
+        CategoryManageScreen(),
+      ],
+    );
   }
 }

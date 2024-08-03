@@ -11,18 +11,25 @@ class AppFileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try{
-      final file = File(path!);
-      print("????2 ${path}");
-      String contents = file.readAsStringSync();
-      return Image.file(File(path!), height: height, width: width);
+      return Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+            image: DecorationImage(
+              image: FileImage(File(path!)),
+              fit: BoxFit.fill
+            )
+        ),
+      );
     } catch(e){
-      print("???? ${e}");
     }
     return Container(
       height: height,
       width: width,
       decoration: BoxDecoration(
-          color: Colors.red,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(8)
       ),
     );

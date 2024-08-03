@@ -33,7 +33,11 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
   File? image;
   final categoryNameEdt = TextEditingController();
   String error = "";
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -88,12 +92,11 @@ class _AddNewCategoryDialogState extends State<AddNewCategoryDialog> {
                             category.name = categoryNameEdt.text;
                             if(image != null){
                               category.filePath = await Helper.saveFile("category","${category.name}${category.id}.${image!.path.split(".").last}", image!);
-                              print("hay za ${category.filePath}");
                             }
-                            context
+                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {context
                                 .read<CreateCategoryBloc>()
                                 .add(CreateCategoryEvent(category));
-                            Navigator.pop(context);
+                            Navigator.pop(context);});
                           }
                         },
                         width: SizeConfig.screenWidth!,

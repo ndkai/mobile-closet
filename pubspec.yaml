@@ -95,11 +95,5 @@ flutter:
     - assets/themes/light_theme.json
     - assets/themes/dark_theme.json
     - assets/icons/
-    - assets/icons/statements/
-    - assets/icons/dnbc/
-    - assets/images/
-    - assets/icons/refer_friend/
-    - assets/icons/shortcut/
-    - assets/icons/mini_icon_short_cut/
 flutter_intl:
   enabled: true

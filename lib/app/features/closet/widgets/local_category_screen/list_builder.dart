@@ -18,13 +18,20 @@ class _ListBuilderState extends State<_ListBuilder> {
   void initState() {
     super.initState();
     categories = widget.categories.reversed.toList();
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("rebuild");
     return Column(
       children: [
-
         SearchWidget(
           title: "Search by category name",
           height: 55,
@@ -62,11 +69,11 @@ class _ListBuilderState extends State<_ListBuilder> {
   Widget _buildItem(Category category, BuildContext context) {
     return Slidable(
         additionItems: [
-          SlidableItem(
-              name: "Edit",
-              icon: Icons.edit,
-              onTap: () {},
-              color: Colors.green),
+          // SlidableItem(
+          //     name: "Edit",
+          //     icon: Icons.edit,
+          //     onTap: () {},
+          //     color: Colors.green),
           SlidableItem(
               name: "Delete",
               icon: Icons.delete,

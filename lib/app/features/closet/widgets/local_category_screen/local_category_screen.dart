@@ -8,34 +8,39 @@ class _LocalCategoryScreen extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => DIService.sl<GetCategoryBloc>()..add(GetCategoriesEvent())),
-          BlocProvider(create: (_) => DIService.sl<CreateCategoryBloc>()),
           BlocProvider(create: (_) => DIService.sl<UpdateCategoryBloc>()),
           BlocProvider(create: (_) => DIService.sl<DeleteCategoryBloc>())
         ],
         child: BaseBackScreen(
           title: "Categories",
           additionWidgets: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.2),
-                  borderRadius: BorderRadius.circular(8)),
-              child: const Icon(
-                Icons.add,
-                color: Colors.blue,
-              ),
-            ).onClick(() {
-              UI.showCreateNewCategory(context).then((value) => context.read<GetCategoryBloc>().add(GetCategoriesEvent()));
+            BlocBuilder<GetCategoryBloc, CategoryState>(builder: (context, state){
+              return Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.2),
+                    borderRadius: BorderRadius.circular(8)),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.blue,
+                ),
+              ).onClick(() {
+                UI.showCreateNewCategory(context).then((value){
+                  context.read<GetCategoryBloc>().add(GetCategoriesEvent());
+                });
+              });
             }),
             const Gap(16)
           ],
           child: BlocConsumer<GetCategoryBloc, CategoryState>(
             builder: (context, state) {
+
               if (state is CategoryLoadingState) {
                 return _buildSkeleton();
               }
 
               if (state is CategoryGetSuccessState) {
+                print("GetCategoryBloc ${state.categories.length}");
                 return Column(
                   children: [
                     BlocListener<DeleteCategoryBloc, CategoryState>(listener: (context, state){
@@ -47,14 +52,15 @@ class _LocalCategoryScreen extends StatelessWidget {
 
                       }
 
-                    }, child: SizedBox(),),
-                    Expanded(child: _ListBuilder(categories: state.categories))
+                    }, child: const SizedBox(),),
+                    Expanded(child: _ListBuilder(key: ValueKey(DateTime.now().microsecond),categories: state.categories))
                   ],
                 );
               }
               return firstCategory(context);
             },
-            listener: (BuildContext context, CategoryState state) {},
+            listener: (BuildContext context, CategoryState state) {
+            },
           ),
         ));
   }
@@ -107,7 +113,7 @@ class _LocalCategoryScreen extends StatelessWidget {
           ).onClick(() => showDialog(
               context: context,
               builder: (context) {
-                return const Dialog(child: AddNewCategoryDialog());
+                return Dialog(key: ValueKey(DateTime.now().microsecond), child: AddNewCategoryDialog());
               }))
         ],
       ),
