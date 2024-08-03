@@ -25,7 +25,7 @@ class CategoryManageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _LocalCategoryScreen(
+    return const _LocalCategoryScreen(
 
     );
   }

@@ -104,7 +104,6 @@ Clothes _clothesDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Clothes();
-  object.dateCreated = reader.readStringOrNull(offsets[0]);
   object.description = reader.readStringOrNull(offsets[1]);
   object.filePath = reader.readStringOrNull(offsets[2]);
   object.id = id;

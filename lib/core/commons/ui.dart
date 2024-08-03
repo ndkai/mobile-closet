@@ -10,6 +10,7 @@ import 'package:toastification/toastification.dart';
 
 import '../../app/features/base/presentation/widgets/bottom_sheets/datetime_range_picker/datetime_range_picker_builder.dart';
 import '../../app/features/base/presentation/widgets/dialogs/add_new_category_dialog.dart';
+import '../../app/features/base/presentation/widgets/dialogs/add_new_clothes_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/confirm_dialog_builder.dart';
 import '../../app/features/base/presentation/widgets/dialogs/loading_dialog.dart';
 import '../../config/theme/theme.dart';
@@ -139,6 +140,14 @@ class UI {
     await  showDialog(context: context, builder: (context){
       return const Dialog(
           child: AddNewCategoryDialog()
+      );
+    });
+  }
+
+  static Future<void> showCreateNewClothesDialog(BuildContext context) async {
+    await  showDialog(context: context, builder: (context){
+      return const Dialog(
+          child: AddNewClothesDialog()
       );
     });
   }

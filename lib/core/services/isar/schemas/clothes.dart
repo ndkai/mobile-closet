@@ -8,7 +8,8 @@ class Clothes {
 
   String? name;
   String? filePath;
-  String? dateCreated;
+  String dateCreated = DateTime.now().toIso8601String();
   String? description;
+  List<int>? categories;
 
 }

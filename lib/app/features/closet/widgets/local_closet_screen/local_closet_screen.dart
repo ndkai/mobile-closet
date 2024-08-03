@@ -13,6 +13,7 @@ class _LocalScreenState extends State<_LocalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.withOpacity(.1),
       appBar: AppBar(
         surfaceTintColor: Colors.white,
         title: Text("Your closet", style: GoogleFonts.montserratAlternates(
@@ -26,10 +27,10 @@ class _LocalScreenState extends State<_LocalScreen> {
       body: Column(
         children: [
           widget.filter,
-          const Gap(16),
+          const Gap(8),
           widget.clothes
         ],
-      ).padding(const EdgeInsets.symmetric(horizontal: 16)),
+      ),
     );
   }
 

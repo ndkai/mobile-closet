@@ -45,13 +45,13 @@ class Helper{
       final directory = await getApplicationDocumentsDirectory();
       final filePath = '${directory.path}/$dir';
       Directory targetDir = Directory(filePath);
-      if(targetDir.existsSync()){
+      if(!targetDir.existsSync()){
         await targetDir.create(recursive: true);
       }
-      String newFilePath = '${targetDir.path}/${fileName}';
+      String newFilePath = '${targetDir.path}/$fileName';
       File newFile = await saveFile.copy(newFilePath);
       // await file.writeAsString(saveFile.readAsStringSync());
-      print('File saved: ${newFile.readAsBytesSync()}');
+      // print('File saved: ${newFile.readAsBytesSync()}');
       print('File saved: $newFilePath');
       return newFilePath;
     } catch (e) {

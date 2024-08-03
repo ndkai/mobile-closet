@@ -16,7 +16,6 @@ import 'package:toastification/toastification.dart';
 import '../../../../../../config/size/size_config.dart';
 import '../../../../../../core/commons/helper.dart';
 import '../../../../../../generated/assets.dart';
-import '../../../../../models/app_clothes.dart';
 import '../buttons/positive_button.dart';
 import '../others/error_area.dart';
 
