@@ -105,8 +105,8 @@ class _LocalRootViewState extends State<_LocalRootView> {
     return IndexedStack(
       index: currentIndex,
       children: const [
+        HomeScreen(),
         ClosetScreen(),
-        CategoryManageScreen(),
         CategoryManageScreen(),
         CategoryManageScreen(),
       ],

@@ -1,25 +1,22 @@
-part of  '../../pages/closet_screen.dart';
+part of '../../pages/home_screen.dart';
 
-class _LocalScreen extends StatefulWidget {
-  final Widget filter;
+
+class _LocalHomeScreen extends StatelessWidget {
+  final Widget header;
+  final Widget recent;
+  final Widget category;
   final Widget clothes;
-  final Widget deleteClothesBuilder;
-  const _LocalScreen({super.key, required this.filter, required this.clothes, required this.deleteClothesBuilder});
+  const _LocalHomeScreen({super.key, required this.header, required this.category, required this.clothes, required this.recent});
 
-  @override
-  State<_LocalScreen> createState() => _LocalScreenState();
-}
-
-class _LocalScreenState extends State<_LocalScreen> {
   @override
   Widget build(BuildContext context) {
-    return  MultiBlocProvider(
+    return MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => DIService.sl<GetClothesBloc>()..add(GetClothesListEvent())),
           BlocProvider(create: (_) => DIService.sl<DeleteClothesBloc>()),
         ],
         child: Scaffold(
-          backgroundColor: Colors.grey.withOpacity(.1),
+          // backgroundColor: Colors.grey.withOpacity(.1),
           appBar: AppBar(
             surfaceTintColor: Colors.white,
             title: Text("Your closet", style: GoogleFonts.montserratAlternates(
@@ -32,15 +29,11 @@ class _LocalScreenState extends State<_LocalScreen> {
           ),
           body: Column(
             children: [
-              widget.filter,
-              const Gap(8),
-              widget.clothes,
-              widget.deleteClothesBuilder
+              header,
+              const Gap(16),
+              recent
             ],
           ),
         ));
   }
-
-
 }
-

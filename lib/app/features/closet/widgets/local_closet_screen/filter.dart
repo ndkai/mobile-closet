@@ -48,15 +48,24 @@ class _Filter extends StatelessWidget {
   Widget _addNewButton(BuildContext context){
     return Column(
       children: [
-        const CircleAvatar(
-          radius: 25,
-          child: Icon(Icons.add),
+        Container(
+          height: 40,
+         width: 40,
+         decoration: const BoxDecoration(
+           shape: BoxShape.circle,
+           gradient: LinearGradient(
+             colors: [Color(0xFF00C9FF), Color(0xFF92FE9D)],
+             begin: Alignment.topLeft,
+             end: Alignment.bottomRight,
+           )
+         ),
+          child: const Icon(Icons.add, color: Colors.white,),
         ),
         const Gap(3),
         Text("Add new", style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12)),)
       ],
     ).padding(const EdgeInsets.only(right: 8)).onClick((){
-      UI.showCreateNewClothesDialog(context);
+      UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesListEvent()));
     });
   }
 

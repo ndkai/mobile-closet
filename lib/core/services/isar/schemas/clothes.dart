@@ -9,7 +9,9 @@ class Clothes {
   String? name;
   String? filePath;
   String dateCreated = DateTime.now().toIso8601String();
+  String? dateUpdated;
   String? description;
   List<int>? categories;
+  List<String>? categoriesName;
 
 }

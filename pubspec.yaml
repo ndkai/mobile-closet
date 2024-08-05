@@ -95,5 +95,6 @@ flutter:
     - assets/themes/light_theme.json
     - assets/themes/dark_theme.json
     - assets/icons/
+    - assets/images/
 flutter_intl:
   enabled: true

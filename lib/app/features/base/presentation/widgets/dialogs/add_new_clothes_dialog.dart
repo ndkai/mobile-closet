@@ -62,11 +62,13 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                   text: error,
                 ),
                 const Gap(24),
-                _BuildCategories(
-                  onChange: (List<int> value) {
-                    newClothes.categories = value;
-                  },
-                ),
+                // _BuildCategories(
+                //   onChange: (List<int> value) {
+                //     newClothes.categories = value;
+                //   }, onChangeName: (List<String> value) {
+                //   newClothes.categoriesName = value;
+                // },
+                // ),
                 const Gap(16),
                 BlocConsumer<CreateClothesBloc, ClothesState>(
                     builder: (context, state) {
@@ -122,7 +124,7 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.grey.withOpacity(.2)),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: Column(
         children: [
           Image.asset(
@@ -188,8 +190,9 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
 
 class _BuildCategories extends StatefulWidget {
   final ValueChanged<List<int>> onChange;
+  final ValueChanged<List<String>> onChangeName;
 
-  const _BuildCategories({super.key, required this.onChange});
+  const _BuildCategories({super.key, required this.onChange, required this.onChangeName});
 
   @override
   State<_BuildCategories> createState() => _BuildCategoriesState();
@@ -197,6 +200,7 @@ class _BuildCategories extends StatefulWidget {
 
 class _BuildCategoriesState extends State<_BuildCategories> {
   List<int> selectedIndexes = <int>[];
+  List<String> selectedName = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +248,10 @@ class _BuildCategoriesState extends State<_BuildCategories> {
                         .map((e) => _buildCategoryItem(e))
                         .toList());
               }
-              return const SizedBox();
+              return  Text("No categories",
+                  style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w700)));
             })
           ],
         ));
@@ -253,9 +260,8 @@ class _BuildCategoriesState extends State<_BuildCategories> {
   Widget _buildCategoryItem(Category category) {
     return Container(
       padding: const EdgeInsets.all(3),
-      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          // color: selectedIndexes.contains(category.id) ? Colors.green : Colors.white,
+          // color: selectedIndexes.contains(category.id) ? Colors.green : Colors.blue,
           borderRadius: BorderRadius.circular(8)),
       child: Column(
         children: [
@@ -282,10 +288,13 @@ class _BuildCategoriesState extends State<_BuildCategories> {
         setState(() {
           if (!selectedIndexes.contains(category.id)) {
             selectedIndexes.add(category.id);
+            selectedName.add(category.name??"");
           } else {
             selectedIndexes.remove(category.id);
+            selectedName.remove(category.name);
           }
           widget.onChange(selectedIndexes);
+          widget.onChangeName(selectedName);
         });
       }),
     );

@@ -10,10 +10,6 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSDocumentsFolderUsageDescription</key>
-    <string>This app needs access to the documents folder to save files.</string>
-    <key>NSFileCreationUsageDescription</key>
-    <string>This app needs permission to create files.</string>
 	<key>CFBundleDisplayName</key>
 	<string>DNBC</string>
 	<key>CFBundleExecutable</key>
@@ -36,8 +32,12 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to your camera to take pictures</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>This app needs access to the documents folder to save files.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Why is my app authenticating using face id?</string>
+	<key>NSFileCreationUsageDescription</key>
+	<string>This app needs permission to create files.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>DNBC want to access your location to show the information suitable for you</string>
 	<key>NSMicrophoneUsageDescription</key>

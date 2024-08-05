@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clean_architechture/core/services/isar/schemas/clothes.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../app/features/base/presentation/widgets/bottom_sheets/datetime_rang
 import '../../app/features/base/presentation/widgets/dialogs/add_new_category_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/add_new_clothes_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/confirm_dialog_builder.dart';
+import '../../app/features/base/presentation/widgets/dialogs/image_action_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/loading_dialog.dart';
 import '../../config/theme/theme.dart';
 import '../../generated/l10n.dart';
@@ -151,15 +153,21 @@ class UI {
       );
     });
   }
+  
+  static Future<void> showClothesActionDialog(BuildContext acontext, Clothes clothes) async {
+    await showDialog(context: acontext, builder: (context){
+      return ClothesActionDialogBuilder(clothes: clothes, rootContext: acontext,);
+    });
+  }
 
   static Future<void> showChooseFileMethodsSheet(BuildContext appContext, {required ValueChanged<List<File>> onChange}) async {
     await showCupertinoModalPopup(
       context: appContext,
       builder: (BuildContext context) =>
           CupertinoActionSheet(
-            title: Text(
-              S.current.chooseCountry,
-              style: const TextStyle(
+            title: const Text(
+              "Choose method",
+              style: TextStyle(
                 color: Color(0xFF141B31),
                 fontSize: 16,
                 fontFamily: 'Roboto',
@@ -215,9 +223,9 @@ class UI {
                   try{
                     UI.showLoadingDialog(context, color: null);
                     final ImagePicker picker = ImagePicker();
-                    await picker.pickMultiImage().then((image){
-                      onChange(image.map((path) => File(path.path)).toList());
-                                          Navigator.of(context).pop();
+                    await picker.pickImage(source: ImageSource.gallery).then((image){
+                      onChange([File(image!.path)]);
+                      Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     });
                   } catch(e){
@@ -234,7 +242,32 @@ class UI {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              )
+              ),
+              CupertinoActionSheetAction(
+                onPressed: () async {
+                  try{
+                    UI.showLoadingDialog(context, color: null);
+                    final ImagePicker picker = ImagePicker();
+                    await picker.pickImage(source: ImageSource.camera).then((image){
+                      onChange([File(image!.path)]);
+                                          Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    });
+                  } catch(e){
+                    Navigator.of(context).pop();
+                  }
+
+                },
+                child: const Text(
+                  'Camera',
+                  style: TextStyle(
+                    color: Color(0xFF141B31),
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
             cancelButton: Container(
               color: Colors.white,

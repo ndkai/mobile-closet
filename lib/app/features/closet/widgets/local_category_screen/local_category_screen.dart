@@ -79,29 +79,19 @@ class _LocalCategoryScreen extends StatelessWidget {
             "Hình như bạn vẫn chưa có loại đồ nào nhỉ?",
             style: GoogleFonts.roboto(
                 textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14)),
-          ),
-          const Gap(8),
-          Text(
-            "Hãy tạo thêm nào!!!",
-            style: GoogleFonts.roboto(
-                textStyle: const TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.w700,
                     fontSize: 16)),
           ),
-          const Gap(32),
-          Image.asset(
-            Assets.iconsAddNew,
-            height: 100,
-          ),
-          const Gap(32),
+          const Gap(20),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-                color: Colors.green, borderRadius: BorderRadius.circular(16)),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF00C9FF), Color(0xFF92FE9D)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ), borderRadius: BorderRadius.circular(16)),
             child: Text(
               "Nhấn vào đây để tạo nhé",
               style: GoogleFonts.roboto(
@@ -114,7 +104,14 @@ class _LocalCategoryScreen extends StatelessWidget {
               context: context,
               builder: (context) {
                 return Dialog(key: ValueKey(DateTime.now().microsecond), child: AddNewCategoryDialog());
-              }))
+              })),
+          const Gap(32),
+          Image.asset(
+            Assets.imagesNewCategory,
+            height: 300,
+          ),
+
+
         ],
       ),
     );
