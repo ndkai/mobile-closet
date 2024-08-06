@@ -27,12 +27,15 @@ class _LocalHomeScreen extends StatelessWidget {
 
             ],
           ),
-          body: Column(
-            children: [
-              header,
-              const Gap(16),
-              recent
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                header,
+                const Gap(16),
+                // recent,
+                category,
+              ],
+            ),
           ),
         ));
   }
