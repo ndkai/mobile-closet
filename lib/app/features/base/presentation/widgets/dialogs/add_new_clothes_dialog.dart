@@ -21,7 +21,8 @@ import '../buttons/positive_button.dart';
 import '../others/error_area.dart';
 
 class AddNewClothesDialog extends StatefulWidget {
-  const AddNewClothesDialog({super.key});
+  final int? closetId;
+  const AddNewClothesDialog({super.key, this.closetId});
 
   @override
   State<AddNewClothesDialog> createState() => _AddNewClothesDialogState();
@@ -86,6 +87,10 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                             UI.showLoadingDialog(context, color: null);
                             newClothes.filePath = await Helper.saveFile("clothes",image!.path.split("/").last, image!);
                             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              print("asdasdasd ${widget.closetId}");
+                              if(widget.closetId != null){
+                                newClothes.closetId = [widget.closetId!];
+                              }
                               context.read<CreateClothesBloc>().add(CreateClothesEvent(newClothes));
                               Navigator.pop(context);
                             });

@@ -9,7 +9,7 @@ import '../../../../../config/theme/theme.dart';
 import '../../../../../core/commons/Ui.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../closet/pages/closet_screen.dart';
+import '../../../closet/pages/items_screen.dart';
 import '../../../home/presentation/pages/home_screen.dart';
 import '../widgets/bottom_nav/nav_bar.dart';
 import '../widgets/bottom_nav/nav_item.dart';

@@ -146,10 +146,10 @@ class UI {
     });
   }
 
-  static Future<void> showCreateNewClothesDialog(BuildContext context) async {
+  static Future<void> showCreateNewClothesDialog(BuildContext context, {int? closetId}) async {
     await  showDialog(context: context, builder: (context){
-      return const Dialog(
-          child: AddNewClothesDialog()
+      return Dialog(
+          child: AddNewClothesDialog(closetId: closetId)
       );
     });
   }

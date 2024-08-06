@@ -11,6 +11,12 @@ class GetClothesEvent extends ClothesEvent {
 
 class GetClothesListEvent extends ClothesEvent {}
 
+class GetClothesByClosetIdEvent extends ClothesEvent {
+  final int id;
+
+  GetClothesByClosetIdEvent(this.id);
+}
+
 class UpdateClothesEvent extends ClothesEvent {
   final Clothes clothes;
 

@@ -1,4 +1,4 @@
-part of  '../../pages/closet_screen.dart';
+part of '../../pages/items_screen.dart';
 
 class _DeleteClothesBuilder extends StatelessWidget {
   const _DeleteClothesBuilder({super.key});

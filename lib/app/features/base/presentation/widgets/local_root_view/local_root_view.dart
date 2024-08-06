@@ -106,7 +106,7 @@ class _LocalRootViewState extends State<_LocalRootView> {
       index: currentIndex,
       children: const [
         HomeScreen(),
-        ClosetScreen(),
+        ItemsScreen(),
         CategoryManageScreen(),
         CategoryManageScreen(),
       ],

@@ -17,23 +17,43 @@ const ClothesSchema = CollectionSchema(
   name: r'Clothes',
   id: -3728431157409560676,
   properties: {
-    r'dateCreated': PropertySchema(
+    r'categories': PropertySchema(
       id: 0,
+      name: r'categories',
+      type: IsarType.longList,
+    ),
+    r'categoriesName': PropertySchema(
+      id: 1,
+      name: r'categoriesName',
+      type: IsarType.stringList,
+    ),
+    r'closetId': PropertySchema(
+      id: 2,
+      name: r'closetId',
+      type: IsarType.longList,
+    ),
+    r'dateCreated': PropertySchema(
+      id: 3,
       name: r'dateCreated',
       type: IsarType.string,
     ),
+    r'dateUpdated': PropertySchema(
+      id: 4,
+      name: r'dateUpdated',
+      type: IsarType.string,
+    ),
     r'description': PropertySchema(
-      id: 1,
+      id: 5,
       name: r'description',
       type: IsarType.string,
     ),
     r'filePath': PropertySchema(
-      id: 2,
+      id: 6,
       name: r'filePath',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 3,
+      id: 7,
       name: r'name',
       type: IsarType.string,
     )
@@ -59,7 +79,32 @@ int _clothesEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.dateCreated;
+    final value = object.categories;
+    if (value != null) {
+      bytesCount += 3 + value.length * 8;
+    }
+  }
+  {
+    final list = object.categoriesName;
+    if (list != null) {
+      bytesCount += 3 + list.length * 3;
+      {
+        for (var i = 0; i < list.length; i++) {
+          final value = list[i];
+          bytesCount += value.length * 3;
+        }
+      }
+    }
+  }
+  {
+    final value = object.closetId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 8;
+    }
+  }
+  bytesCount += 3 + object.dateCreated.length * 3;
+  {
+    final value = object.dateUpdated;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -91,10 +136,14 @@ void _clothesSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.dateCreated);
-  writer.writeString(offsets[1], object.description);
-  writer.writeString(offsets[2], object.filePath);
-  writer.writeString(offsets[3], object.name);
+  writer.writeLongList(offsets[0], object.categories);
+  writer.writeStringList(offsets[1], object.categoriesName);
+  writer.writeLongList(offsets[2], object.closetId);
+  writer.writeString(offsets[3], object.dateCreated);
+  writer.writeString(offsets[4], object.dateUpdated);
+  writer.writeString(offsets[5], object.description);
+  writer.writeString(offsets[6], object.filePath);
+  writer.writeString(offsets[7], object.name);
 }
 
 Clothes _clothesDeserialize(
@@ -104,10 +153,15 @@ Clothes _clothesDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Clothes();
-  object.description = reader.readStringOrNull(offsets[1]);
-  object.filePath = reader.readStringOrNull(offsets[2]);
+  object.categories = reader.readLongList(offsets[0]);
+  object.categoriesName = reader.readStringList(offsets[1]);
+  object.closetId = reader.readLongList(offsets[2]);
+  object.dateCreated = reader.readString(offsets[3]);
+  object.dateUpdated = reader.readStringOrNull(offsets[4]);
+  object.description = reader.readStringOrNull(offsets[5]);
+  object.filePath = reader.readStringOrNull(offsets[6]);
   object.id = id;
-  object.name = reader.readStringOrNull(offsets[3]);
+  object.name = reader.readStringOrNull(offsets[7]);
   return object;
 }
 
@@ -119,12 +173,20 @@ P _clothesDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongList(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readStringList(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongList(offset)) as P;
     case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readStringOrNull(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
+    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -220,24 +282,564 @@ extension ClothesQueryWhere on QueryBuilder<Clothes, Clothes, QWhereClause> {
 
 extension ClothesQueryFilter
     on QueryBuilder<Clothes, Clothes, QFilterCondition> {
-  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedIsNull() {
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'dateCreated',
+        property: r'categories',
       ));
     });
   }
 
-  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedIsNotNull() {
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'dateCreated',
+        property: r'categories',
       ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesElementEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'categories',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'categories',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'categories',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'categories',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categories',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> categoriesNameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'categoriesName',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'categoriesName',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'categoriesName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'categoriesName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'categoriesName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'categoriesName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'categoriesName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      categoriesNameLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'categoriesName',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'closetId',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'closetId',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdElementEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'closetId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      closetIdElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'closetId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'closetId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'closetId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      closetIdLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> closetIdLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'closetId',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
   QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -250,7 +852,7 @@ extension ClothesQueryFilter
   }
 
   QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -265,7 +867,7 @@ extension ClothesQueryFilter
   }
 
   QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -280,8 +882,8 @@ extension ClothesQueryFilter
   }
 
   QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateCreatedBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -362,6 +964,153 @@ extension ClothesQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'dateCreated',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'dateUpdated',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'dateUpdated',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'dateUpdated',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'dateUpdated',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'dateUpdated',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition> dateUpdatedIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'dateUpdated',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterFilterCondition>
+      dateUpdatedIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'dateUpdated',
         value: '',
       ));
     });
@@ -878,6 +1627,18 @@ extension ClothesQuerySortBy on QueryBuilder<Clothes, Clothes, QSortBy> {
     });
   }
 
+  QueryBuilder<Clothes, Clothes, QAfterSortBy> sortByDateUpdated() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dateUpdated', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterSortBy> sortByDateUpdatedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dateUpdated', Sort.desc);
+    });
+  }
+
   QueryBuilder<Clothes, Clothes, QAfterSortBy> sortByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
@@ -926,6 +1687,18 @@ extension ClothesQuerySortThenBy
   QueryBuilder<Clothes, Clothes, QAfterSortBy> thenByDateCreatedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateCreated', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterSortBy> thenByDateUpdated() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dateUpdated', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QAfterSortBy> thenByDateUpdatedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dateUpdated', Sort.desc);
     });
   }
 
@@ -980,10 +1753,35 @@ extension ClothesQuerySortThenBy
 
 extension ClothesQueryWhereDistinct
     on QueryBuilder<Clothes, Clothes, QDistinct> {
+  QueryBuilder<Clothes, Clothes, QDistinct> distinctByCategories() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'categories');
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QDistinct> distinctByCategoriesName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'categoriesName');
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QDistinct> distinctByClosetId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'closetId');
+    });
+  }
+
   QueryBuilder<Clothes, Clothes, QDistinct> distinctByDateCreated(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateCreated', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Clothes, Clothes, QDistinct> distinctByDateUpdated(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'dateUpdated', caseSensitive: caseSensitive);
     });
   }
 
@@ -1017,9 +1815,34 @@ extension ClothesQueryProperty
     });
   }
 
-  QueryBuilder<Clothes, String?, QQueryOperations> dateCreatedProperty() {
+  QueryBuilder<Clothes, List<int>?, QQueryOperations> categoriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'categories');
+    });
+  }
+
+  QueryBuilder<Clothes, List<String>?, QQueryOperations>
+      categoriesNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'categoriesName');
+    });
+  }
+
+  QueryBuilder<Clothes, List<int>?, QQueryOperations> closetIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'closetId');
+    });
+  }
+
+  QueryBuilder<Clothes, String, QQueryOperations> dateCreatedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateCreated');
+    });
+  }
+
+  QueryBuilder<Clothes, String?, QQueryOperations> dateUpdatedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'dateUpdated');
     });
   }
 

@@ -1,4 +1,4 @@
-part of  '../../pages/closet_screen.dart';
+part of '../../pages/items_screen.dart';
 
 class _LocalScreen extends StatefulWidget {
   final Widget filter;

@@ -1,8 +1,7 @@
-part of '../../pages/closet_screen.dart';
+part of '../../pages/items_screen.dart';
 
 class _Filter extends StatelessWidget {
-  final Closet closet;
-  const _Filter({super.key, required this.closet});
+  const _Filter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,7 @@ class _Filter extends StatelessWidget {
         Text("Add new", style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12)),)
       ],
     ).padding(const EdgeInsets.only(right: 8)).onClick((){
-      UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
+      UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesListEvent()));
     });
   }
 

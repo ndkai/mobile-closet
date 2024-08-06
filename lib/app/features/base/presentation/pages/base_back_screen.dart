@@ -37,7 +37,7 @@ class BaseBackScreen extends StatelessWidget {
                   fontSize: 16)),),
           centerTitle: true,
         ),
-        backgroundColor: Colors.grey.withOpacity(.2),
+        backgroundColor: Colors.white,
         body: child);
   }
 }

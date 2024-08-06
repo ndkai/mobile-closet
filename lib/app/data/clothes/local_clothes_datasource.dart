@@ -5,6 +5,7 @@ import 'package:isar/isar.dart';
 abstract class LocalClothesDataSource {
   Future<List<Clothes>> getClothes();
   Future<Clothes?> getClothesById(int id);
+  Future<List<Clothes>?> getClothesByClosetId(int id);
   Future<bool> addClothes(Clothes clothes);
   Future<bool> deleteClothes(int id);
   Future<bool> updateClothes(Clothes clothes);
@@ -18,6 +19,7 @@ class LocalClothesDataSourceImpl implements LocalClothesDataSource {
   @override
   Future<bool> addClothes(Clothes clothes) async {
     try {
+      print("asdasdasd s${clothes.closetId.toString()}");
       await database.isar.writeTxn(() async {
         await database.isar.clothes.put(clothes); // Insert the new clothes
       });
@@ -70,6 +72,17 @@ class LocalClothesDataSourceImpl implements LocalClothesDataSource {
       final clothes = await database.isar.clothes.get(id);
       return clothes;
     } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Clothes>?> getClothesByClosetId(int id) async {
+    try {
+      final data = await database.isar.clothes.filter().closetIdElementEqualTo(id).findAll();
+      return data.isEmpty ? null : data;
+    } catch (e) {
+      print("getClosetByName $e");
       return null;
     }
   }

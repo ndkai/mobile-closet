@@ -12,6 +12,13 @@ class _LocalHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          BlocProvider(create: (_) => DIService.sl<CreateClosetBloc>()),
+          BlocProvider(create: (_) => DIService.sl<UpdateClosetBloc>()),
+          BlocProvider(create: (_) => DIService.sl<DeleteClosetBloc>()),
+          BlocProvider(create: (_) => DIService.sl<GetClosetBloc>()..add(GetClosetListEvent())),
+        ],
+        child: MultiBlocProvider(
+        providers: [
           BlocProvider(create: (_) => DIService.sl<GetClothesBloc>()..add(GetClothesListEvent())),
           BlocProvider(create: (_) => DIService.sl<DeleteClothesBloc>()),
         ],
@@ -27,16 +34,20 @@ class _LocalHomeScreen extends StatelessWidget {
 
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                header,
-                const Gap(16),
-                // recent,
-                category,
-              ],
+          body: Container(
+            height: SizeConfig.screenHeight,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  header,
+                  const Gap(16),
+                  // recent,
+                  category,
+                  const Gap(200)
+                ],
+              ),
             ),
           ),
-        ));
+        )));
   }
 }

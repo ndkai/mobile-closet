@@ -66,6 +66,17 @@ class GetClothesBloc extends Bloc<ClothesEvent, ClothesState> {
   GetClothesBloc(this.localClothesDataSource) : super(ClothesInitState()) {
     on<GetClothesListEvent>(_getClothes);
     on<GetClothesEvent>(_getClothesById);
+    on<GetClothesByClosetIdEvent>(_getClothesByClosetId);
+  }
+
+  void _getClothesByClosetId(GetClothesByClosetIdEvent event, Emitter<ClothesState> emit) async {
+    emit(ClothesLoadingState());
+    final data = await localClothesDataSource.getClothesByClosetId(event.id);
+    if (data != null) {
+      emit(ClothesGetSuccessState(data));
+    } else {
+      emit(ClothesErrorState("Error"));
+    }
   }
 
   void _getClothes(GetClothesListEvent event, Emitter<ClothesState> emit) async {

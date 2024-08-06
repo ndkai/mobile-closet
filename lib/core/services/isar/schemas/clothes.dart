@@ -12,6 +12,7 @@ class Clothes {
   String? dateUpdated;
   String? description;
   List<int>? categories;
+  List<int>? closetId;
   List<String>? categoriesName;
 
 }

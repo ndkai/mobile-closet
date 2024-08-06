@@ -1,8 +1,7 @@
-part of '../../pages/closet_screen.dart';
+part of '../../pages/items_screen.dart';
 
 class _Clothes extends StatelessWidget {
-  final Closet closet;
-  const _Clothes({super.key, required this.closet});
+  const _Clothes({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,7 @@ class _Clothes extends StatelessWidget {
                 style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey)), textAlign: TextAlign.center,),
               const Gap(32),
               PositiveButton(onTap: (){
-                UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
+                UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesListEvent()));
               }, width: SizeConfig.screenWidth! * 0.9, height: 44, label: "Add New")
             ],
           ),
