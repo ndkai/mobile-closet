@@ -66,7 +66,7 @@ class _Filter extends StatelessWidget {
         Text("Add new", style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12)),)
       ],
     ).padding(const EdgeInsets.only(right: 8)).onClick((){
-      UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
+      UI.showCreateNewClothesDialog(context, closetId: closet.id).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
     });
   }
 

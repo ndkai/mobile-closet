@@ -31,7 +31,7 @@ class _LocalScreen extends StatelessWidget {
             children: [
               _Filter(closet: closet,),
               _Clothes(closet: closet,),
-              BlocListener<DeleteClothesBloc, ClothesState>(
+               BlocListener<DeleteClothesBloc, ClothesState>(
                 listener: (context, state){
                   if(state is ClothesDeleteSuccessState){
                     Navigator.of(context).pop();

@@ -54,7 +54,7 @@ class _Clothes extends StatelessWidget {
                 style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey)), textAlign: TextAlign.center,),
               const Gap(32),
               PositiveButton(onTap: (){
-                UI.showCreateNewClothesDialog(context).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
+                UI.showCreateNewClothesDialog(context, closetId: closet.id).then((value) => context.read<GetClothesBloc>().add(GetClothesByClosetIdEvent(closet.id)));
               }, width: SizeConfig.screenWidth! * 0.9, height: 44, label: "Add New")
             ],
           ),

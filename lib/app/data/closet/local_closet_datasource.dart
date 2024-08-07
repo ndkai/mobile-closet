@@ -74,8 +74,10 @@ class LocalClosetDataSourceImpl implements LocalClosetDataSource {
   Future<Closet?> getClosetById(int id) async {
     try {
       final e = await database.isar.closets.get(id);
+      print("getClosetByName $e");
       return e;
     } catch (e) {
+      print("getClosetByName $e");
       return null;
     }
   }

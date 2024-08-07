@@ -79,7 +79,9 @@ class LocalClothesDataSourceImpl implements LocalClothesDataSource {
   @override
   Future<List<Clothes>?> getClothesByClosetId(int id) async {
     try {
+      print("getClosetByName $id");
       final data = await database.isar.clothes.filter().closetIdElementEqualTo(id).findAll();
+      print("getClosetByName $data");
       return data.isEmpty ? null : data;
     } catch (e) {
       print("getClosetByName $e");
