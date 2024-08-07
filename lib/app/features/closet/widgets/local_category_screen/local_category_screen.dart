@@ -40,11 +40,9 @@ class _LocalCategoryScreen extends StatelessWidget {
               }
 
               if (state is CategoryGetSuccessState) {
-                print("GetCategoryBloc ${state.categories.length}");
                 return Column(
                   children: [
                     BlocListener<DeleteCategoryBloc, CategoryState>(listener: (context, state){
-                      print("lolol ${state}");
                       if(state is CategoryDeleteSuccessState){
                         context.read<GetCategoryBloc>().add(GetCategoriesEvent());
                       }

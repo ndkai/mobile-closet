@@ -32,6 +32,9 @@ class _Clothes extends StatelessWidget {
                           )
                       ),
                     ),
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ClothesDetailsScreen(clothes: state.clothes[index],)));
+                    },
                   );
                 }),
           );

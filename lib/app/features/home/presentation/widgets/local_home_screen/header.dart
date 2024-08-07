@@ -18,12 +18,19 @@ class _HeaderState extends State<_Header> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Good morning,", style: GoogleFonts.montserratAlternates(
-                    textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700)
-                ),),
-                Text("Nguyen Nhat Duy", style: GoogleFonts.montserratAlternates(
-                    textStyle: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w700)
-                ),)
+                Text(
+                  "Good morning,",
+                  style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w700)),
+                ),
+                const Gap(3),
+                Text(
+                  "Nguyen Hoang Nhat Duy",
+                  style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.w700)),
+                )
               ],
             ),
             const CircleAvatar(
@@ -37,40 +44,49 @@ class _HeaderState extends State<_Header> {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(.1),
-            borderRadius: BorderRadius.circular(8)
-          ),
+              color: Colors.grey.withOpacity(.1),
+              borderRadius: BorderRadius.circular(8)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(child: Column(
+              const Expanded(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("The weather is rainy to day", style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),),
-                  Gap(3),
-                  Text("Remember to bring your raincoat", style: TextStyle(
-                    color: Color(0xFF014494),
-                    fontSize: 14,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),),
+                  Text(
+                    "The weather is rainy to day",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Gap(5),
+                  Text(
+                    "Remember to bring your raincoat",
+                    style: TextStyle(
+                      color: Color(0xFF014494),
+                      fontSize: 14,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               )),
               Column(
                 children: [
-                    Image.asset(Assets.iconsSunny),
-                    Gap(3),
-                  Text("20/30 °C", style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),),
+                  Image.asset(Assets.iconsSunny),
+                  const Gap(3),
+                  const Text(
+                    "20/30 °C",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               )
             ],

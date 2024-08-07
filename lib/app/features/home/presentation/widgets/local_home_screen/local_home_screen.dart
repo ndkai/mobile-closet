@@ -39,6 +39,7 @@ class _LocalHomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+
                   header,
                   const Gap(16),
                   // recent,

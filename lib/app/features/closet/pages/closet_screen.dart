@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:clean_architechture/app/features/base/presentation/pages/base_back_screen.dart';
+import 'package:clean_architechture/app/features/clothes/pages/clothes_details_screen.dart';
 import 'package:clean_architechture/core/extensions/widget_extension.dart';
 import 'package:clean_architechture/core/services/isar/schemas/closet.dart';
 import 'package:flutter/material.dart';
