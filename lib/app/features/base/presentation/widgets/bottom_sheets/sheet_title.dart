@@ -26,7 +26,7 @@ class SheetTitle extends StatelessWidget {
           ],
         ),
          Text(
-          'Close',
+          'Done',
           textAlign: TextAlign.right,
           style: GoogleFonts.roboto(
             color: const Color(0xFF001F7B),

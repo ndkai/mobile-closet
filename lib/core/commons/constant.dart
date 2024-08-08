@@ -20,4 +20,28 @@ class Constant{
   ClothesColor('Cyan', 0xFF00FFFF),
   ];
 
+  static List<String> materials = [
+    "Cotton",
+    "Linen",
+    "Wool",
+    "Silk",
+    "Cashmere",
+    "Hemp",
+    "Bamboo",
+    "Polyester",
+    "Nylon",
+    "Acrylic",
+    "Spandex (Lycra/Elastane)",
+    "Rayon (Viscose)",
+    "Modal",
+    "Poly-cotton (Polyester and Cotton)",
+    "Wool Blends",
+    "Stretch Blends",
+    "Denim",
+    "Corduroy",
+    "Velvet",
+    "Tweed",
+    "Fleece",
+  ];
+
 }

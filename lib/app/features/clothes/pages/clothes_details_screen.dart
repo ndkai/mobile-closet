@@ -1,13 +1,18 @@
 import 'package:clean_architechture/app/features/base/presentation/blocs/toggle_cubit.dart';
 import 'package:clean_architechture/app/features/base/presentation/widgets/others/file_image.dart';
+import 'package:clean_architechture/app/features/closet/manager/clothes_details/clothes_details_bloc.dart';
+import 'package:clean_architechture/config/size/size_config.dart';
+import 'package:clean_architechture/core/commons/constant.dart';
 import 'package:clean_architechture/core/extensions/widget_extension.dart';
 import 'package:clean_architechture/core/services/isar/schemas/clothes.dart';
+import 'package:clean_architechture/core/services/isar/schemas/clothes_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/services/di_service.dart';
+import '../../base/presentation/widgets/bottom_sheets/material_sheet_builder.dart';
 import '../../base/presentation/widgets/dialogs/color_picker.dart';
 import '../../closet/manager/clothes/clothes_bloc.dart';
 

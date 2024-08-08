@@ -9,6 +9,8 @@ class _LocalScreen extends StatelessWidget {
     return  MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => DIService.sl<GetClothesBloc>()),
+          BlocProvider(create: (_) => DIService.sl<CreateClothesDetailsBloc>()),
+          BlocProvider(create: (_) => DIService.sl<GetClothesDetailsBloc>()..add(GetClothesDetailsEvent(clothes.id))),
           BlocProvider(create: (_) => ToggleCubit()..set(true)),
         ],
         child: Scaffold(
@@ -36,7 +38,7 @@ class _LocalScreen extends StatelessWidget {
                 const _Filter(),
                 const Gap(16),
                 BlocBuilder<ToggleCubit, bool>(builder: (context, state){
-                  return state ? const _InformationBuilder() : const _OutFit();
+                  return state ? _InformationBuilder(clothesId: clothes.id,) : const _OutFit();
                 })
               ],
             ),

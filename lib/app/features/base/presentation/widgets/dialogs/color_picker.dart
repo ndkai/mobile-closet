@@ -10,7 +10,7 @@ import '../../../../../../core/models/clothes_color.dart';
 import '../buttons/negative_button.dart';
 
 class ColorPickerBuilder extends StatefulWidget {
-  final List<ClothesColor> colors;
+  final List<String> colors;
   final Function(List<String>) onConfirm;
   const ColorPickerBuilder({super.key, required this.colors, required this.onConfirm});
 
@@ -24,7 +24,7 @@ class _ColorPickerBuilderState extends State<ColorPickerBuilder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedColors = widget.colors.map((e) => e.name).toList();
+    selectedColors = widget.colors;
   }
   @override
   Widget build(BuildContext context) {
