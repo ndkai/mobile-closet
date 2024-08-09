@@ -19,13 +19,13 @@ class MaterialSheerBuilder extends StatefulWidget {
 
 class _MaterialSheerBuilderState extends State<MaterialSheerBuilder> {
   String keyword = "";
-  late List<String> selected;
+  List<String> selected = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    selected = widget.materials;
+    selected.addAll(widget.materials ??[]);
   }
   @override
   Widget build(BuildContext context) {

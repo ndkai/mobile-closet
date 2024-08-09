@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -54,6 +55,16 @@ class Helper{
       // print('File saved: ${newFile.readAsBytesSync()}');
       print('File saved: $newFilePath');
       return newFilePath;
+    } catch (e) {
+      print('Error saving file: $e');
+      return null;
+    }
+  }
+
+  static Future<String?> replaceImage(Uint8List saveFile, File currentFile) async {
+    try {
+      await currentFile.writeAsBytes(saveFile);
+      return currentFile.path;
     } catch (e) {
       print('Error saving file: $e');
       return null;

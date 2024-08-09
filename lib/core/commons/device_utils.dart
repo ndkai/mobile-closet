@@ -6,9 +6,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-
 import '../models/device_info.dart';
 import 'dart:io' show Platform;
+
 class DeviceUtils{
   static Future<DeviceInfo> getDeviceInfo(BuildContext context) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

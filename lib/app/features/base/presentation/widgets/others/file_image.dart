@@ -19,7 +19,7 @@ class AppFileImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
               image: FileImage(File(path!)),
-              fit: BoxFit.fill
+              fit: BoxFit.fitHeight
             )
         ),
       );

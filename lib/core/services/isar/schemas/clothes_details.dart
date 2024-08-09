@@ -8,6 +8,8 @@ class ClothesDetails {
   int? clothesId;
   String? name;
   String? type;
+  String? brand;
+  double? price;
   List<int>? categories;
   List<String>? occasions;
   List<String>? seasons;

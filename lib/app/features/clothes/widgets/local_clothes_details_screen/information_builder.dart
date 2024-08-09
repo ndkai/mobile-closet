@@ -10,6 +10,7 @@ class _InformationBuilder extends StatefulWidget {
 
 class _InformationBuilderState extends State<_InformationBuilder> {
   ClothesDetails clothDetails = ClothesDetails();
+  TextEditingController priceController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -19,9 +20,7 @@ class _InformationBuilderState extends State<_InformationBuilder> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetClothesDetailsBloc, ClothesDetailsState>(builder: (context, state){
-      print("asdasdasdasd ${state}");
       if(state is ClothesDetailsGetSuccessState){
-        print("asdasdasdasd ${state.clothesDetails.length}");
         clothDetails = state.clothesDetails.first;
       }
       return Column(
@@ -32,10 +31,17 @@ class _InformationBuilderState extends State<_InformationBuilder> {
           ),),
           // const Gap(8),
           _buildHorizonItem(title: "Type", widgets: [
-            Text("Red", style: GoogleFonts.roboto(
+            Text(clothDetails.type ?? "None", style: GoogleFonts.roboto(
                 textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)
             ),),
-          ]),
+          ]).onClick((){
+            UI.showInputFieldDialog(context, title: "Your clothes type", hint: "Input your type",onConfirm: (s) {
+              setState(() {
+                clothDetails.type = s;
+              });
+              context.read<CreateClothesDetailsBloc>().add(CreateClothesDetailsEvent(clothDetails));
+            }, addition: Constant.fashionCategories);
+          }),
           _buildHorizonItem(title: "Color", widgets: _mapColors(clothDetails.colors??[])).onClick((){
             showDialog(context: context, builder: (aContext){
               return Dialog(
@@ -51,44 +57,84 @@ class _InformationBuilderState extends State<_InformationBuilder> {
             });
           }),
           _buildHorizonItem(title: "Material", widgets: _mapMaterial(clothDetails.material??[])).onClick((){
-            showModalBottomSheet(context: context, builder: (context){
+            showModalBottomSheet(context: context, builder: (acontext){
               return MaterialSheerBuilder(materials: clothDetails.material??[], onChange: (List<String> value) {
                 setState(() {
                   clothDetails.material = value;
                 });
+                context.read<CreateClothesDetailsBloc>().add(CreateClothesDetailsEvent(clothDetails));
               },);
             });
           }),
           _buildHorizonItem(title: "Brand", widgets: [
-            Text("Red", style: GoogleFonts.roboto(
+            Text(clothDetails.brand ?? "None", style: GoogleFonts.roboto(
                 textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)
             ),),
           ]).onClick((){
-            showDialog(context: context, builder: (context){
+            UI.showInputFieldDialog(context, title: "Your clothes brand", hint: "Input your brand",onConfirm: (s) {
+              setState(() {
+                clothDetails.brand = s;
+              });
+              context.read<CreateClothesDetailsBloc>().add(CreateClothesDetailsEvent(clothDetails));
+            }, addition: Constant.clothingBrands);
+          }),
+          _buildHorizonItem(title: "Price", widgets: [
+            Text(Helper.formatCurrency(clothDetails.price ?? 0), style: GoogleFonts.roboto(
+                textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)
+            ),),
+          ]).onClick((){
+            showDialog(context: context, builder: (acontext){
               return Dialog(
                 child: Container(
-                  color: Colors.white,
-                  height: 100,
-                  child: const Column(
-                    children: [
-                      Text("Duy", style: TextStyle(),),
-
-                    ],
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)
                   ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                    Text("Input money", style: GoogleFonts.roboto(
+                      textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
+                  ),),
+                      const Gap(8),
+                      CustomTextFormField(label: "Input the clothes price", onChanged: (s){
+
+                      }, controller: priceController, textInputType: TextInputType.number,),
+                      const Gap(25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NegativeButton(width:  SizeConfig.screenWidth! * 0.3, height: 40, onTap: (){
+                            Navigator.pop(context);
+                          }),
+                          PositiveButton(onTap: (){
+                            Navigator.pop(context);
+                            setState(() {
+                              clothDetails.price = priceController.text.isEmpty ? 0 : double.parse(priceController.text);
+                            });
+                            context.read<CreateClothesDetailsBloc>().add(CreateClothesDetailsEvent(clothDetails));
+                          }, width: SizeConfig.screenWidth! * 0.3, height: 40, label: "Ok")
+                        ],
+                      ),
+                    ],
                 ),
+              ),
               );
             });
           }),
-          _buildHorizonItem(title: "Price", widgets: [
-            Text("Red", style: GoogleFonts.roboto(
-                textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)
-            ),),
-          ]),
           _buildHorizonItem(title: "Purchase date", widgets: [
-            Text("Red", style: GoogleFonts.roboto(
-                textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)
+            Text(clothDetails.dateCreated != null ? DateTimeUtils.formatTime(clothDetails.dateCreated!, showHour: false) : "None", style: GoogleFonts.roboto(
+                textStyle: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w600, fontSize: 16)
             ),),
-          ]),
+          ]).onClick((){
+            UI.showDateTimePickerBottomSheet(context, onChanged: (d){
+              setState(() {
+                clothDetails.dateCreated = d.toIso8601String();
+              });
+              context.read<CreateClothesDetailsBloc>().add(CreateClothesDetailsEvent(clothDetails));
+            });
+          }),
         ],
       ).padding(const EdgeInsets.symmetric(horizontal: 16));
     });

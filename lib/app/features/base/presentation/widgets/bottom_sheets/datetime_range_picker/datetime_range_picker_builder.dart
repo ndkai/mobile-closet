@@ -46,7 +46,7 @@ class _DateTimeRangePickerBuilderState extends State<DateTimeRangePickerBuilder>
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SheetTitle(name: "",),
+          const SheetTitle(name: "Picker date",),
           const Gap(10),
           widget.instruction ?? Container(
             width: 375,
@@ -185,7 +185,7 @@ class DateTimePickerBuilder extends StatefulWidget {
 class _DateTimePickerBuilderState extends State<DateTimePickerBuilder> {
   @override
   Widget build(BuildContext context) {
-    final DateTime now = tz.TZDateTime.now(tz.getLocation('America/Toronto'));
+    final DateTime now = DateTime.now();
     return Container(
       width: SizeConfig.screenWidth,
       decoration: const BoxDecoration(

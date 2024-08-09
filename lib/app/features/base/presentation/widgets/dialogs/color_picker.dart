@@ -24,7 +24,7 @@ class _ColorPickerBuilderState extends State<ColorPickerBuilder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedColors = widget.colors;
+    selectedColors.addAll(widget.colors);
   }
   @override
   Widget build(BuildContext context) {

@@ -1,20 +1,27 @@
 import 'dart:io';
 
+import 'package:clean_architechture/core/extensions/widget_extension.dart';
 import 'package:clean_architechture/core/services/isar/schemas/clothes.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../app/features/base/presentation/widgets/bottom_sheets/datetime_range_picker/datetime_range_picker_builder.dart';
+import '../../app/features/base/presentation/widgets/buttons/negative_button.dart';
+import '../../app/features/base/presentation/widgets/buttons/positive_button.dart';
 import '../../app/features/base/presentation/widgets/dialogs/add_new_category_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/add_new_clothes_dialog.dart';
 import '../../app/features/base/presentation/widgets/dialogs/confirm_dialog_builder.dart';
 import '../../app/features/base/presentation/widgets/dialogs/image_action_dialog.dart';
+import '../../app/features/base/presentation/widgets/dialogs/input_dialog_builder.dart';
 import '../../app/features/base/presentation/widgets/dialogs/loading_dialog.dart';
+import '../../app/features/base/presentation/widgets/text_field/custom_text_form_field.dart';
+import '../../config/size/size_config.dart';
 import '../../config/theme/theme.dart';
 import '../../generated/l10n.dart';
 
@@ -36,6 +43,15 @@ class UI {
             instruction: instruction,
             maximumDate: maximumDate,
             mode: mode));
+  }
+
+  static showInputFieldDialog(BuildContext context, {List<String>? addition, String title = "", String hint = "", required Function(String) onConfirm}){
+
+    showDialog(context: context, builder: (context){
+      return Dialog(
+        child: InputFieldDialogBuilder(title: title, hint: hint, onConfirm: onConfirm, additions: addition ?? [],),
+      );
+    });
   }
 
   static void showUnsupportSnackbar() {

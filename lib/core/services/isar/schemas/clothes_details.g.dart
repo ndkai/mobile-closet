@@ -17,53 +17,63 @@ const ClothesDetailsSchema = CollectionSchema(
   name: r'ClothesDetails',
   id: 7071739865819396502,
   properties: {
-    r'categories': PropertySchema(
+    r'brand': PropertySchema(
       id: 0,
+      name: r'brand',
+      type: IsarType.string,
+    ),
+    r'categories': PropertySchema(
+      id: 1,
       name: r'categories',
       type: IsarType.longList,
     ),
     r'clothesId': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'clothesId',
       type: IsarType.long,
     ),
     r'colors': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'colors',
       type: IsarType.stringList,
     ),
     r'dateCreated': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'dateCreated',
       type: IsarType.string,
     ),
     r'dateUpdated': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'dateUpdated',
       type: IsarType.string,
     ),
     r'material': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'material',
       type: IsarType.stringList,
     ),
     r'name': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'name',
       type: IsarType.string,
     ),
     r'occasions': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'occasions',
       type: IsarType.stringList,
     ),
+    r'price': PropertySchema(
+      id: 9,
+      name: r'price',
+      type: IsarType.double,
+    ),
     r'seasons': PropertySchema(
-      id: 8,
+      id: 10,
       name: r'seasons',
       type: IsarType.stringList,
     ),
     r'type': PropertySchema(
-      id: 9,
+      id: 11,
       name: r'type',
       type: IsarType.string,
     )
@@ -88,6 +98,12 @@ int _clothesDetailsEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.brand;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.categories;
     if (value != null) {
@@ -175,16 +191,18 @@ void _clothesDetailsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLongList(offsets[0], object.categories);
-  writer.writeLong(offsets[1], object.clothesId);
-  writer.writeStringList(offsets[2], object.colors);
-  writer.writeString(offsets[3], object.dateCreated);
-  writer.writeString(offsets[4], object.dateUpdated);
-  writer.writeStringList(offsets[5], object.material);
-  writer.writeString(offsets[6], object.name);
-  writer.writeStringList(offsets[7], object.occasions);
-  writer.writeStringList(offsets[8], object.seasons);
-  writer.writeString(offsets[9], object.type);
+  writer.writeString(offsets[0], object.brand);
+  writer.writeLongList(offsets[1], object.categories);
+  writer.writeLong(offsets[2], object.clothesId);
+  writer.writeStringList(offsets[3], object.colors);
+  writer.writeString(offsets[4], object.dateCreated);
+  writer.writeString(offsets[5], object.dateUpdated);
+  writer.writeStringList(offsets[6], object.material);
+  writer.writeString(offsets[7], object.name);
+  writer.writeStringList(offsets[8], object.occasions);
+  writer.writeDouble(offsets[9], object.price);
+  writer.writeStringList(offsets[10], object.seasons);
+  writer.writeString(offsets[11], object.type);
 }
 
 ClothesDetails _clothesDetailsDeserialize(
@@ -194,17 +212,19 @@ ClothesDetails _clothesDetailsDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = ClothesDetails();
-  object.categories = reader.readLongList(offsets[0]);
-  object.clothesId = reader.readLongOrNull(offsets[1]);
-  object.colors = reader.readStringList(offsets[2]);
-  object.dateCreated = reader.readStringOrNull(offsets[3]);
-  object.dateUpdated = reader.readStringOrNull(offsets[4]);
+  object.brand = reader.readStringOrNull(offsets[0]);
+  object.categories = reader.readLongList(offsets[1]);
+  object.clothesId = reader.readLongOrNull(offsets[2]);
+  object.colors = reader.readStringList(offsets[3]);
+  object.dateCreated = reader.readStringOrNull(offsets[4]);
+  object.dateUpdated = reader.readStringOrNull(offsets[5]);
   object.id = id;
-  object.material = reader.readStringList(offsets[5]);
-  object.name = reader.readStringOrNull(offsets[6]);
-  object.occasions = reader.readStringList(offsets[7]);
-  object.seasons = reader.readStringList(offsets[8]);
-  object.type = reader.readStringOrNull(offsets[9]);
+  object.material = reader.readStringList(offsets[6]);
+  object.name = reader.readStringOrNull(offsets[7]);
+  object.occasions = reader.readStringList(offsets[8]);
+  object.price = reader.readDoubleOrNull(offsets[9]);
+  object.seasons = reader.readStringList(offsets[10]);
+  object.type = reader.readStringOrNull(offsets[11]);
   return object;
 }
 
@@ -216,24 +236,28 @@ P _clothesDetailsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongList(offset)) as P;
-    case 1:
-      return (reader.readLongOrNull(offset)) as P;
-    case 2:
-      return (reader.readStringList(offset)) as P;
-    case 3:
       return (reader.readStringOrNull(offset)) as P;
+    case 1:
+      return (reader.readLongList(offset)) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (reader.readStringList(offset)) as P;
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringList(offset)) as P;
-    case 6:
       return (reader.readStringOrNull(offset)) as P;
-    case 7:
+    case 6:
       return (reader.readStringList(offset)) as P;
+    case 7:
+      return (reader.readStringOrNull(offset)) as P;
     case 8:
       return (reader.readStringList(offset)) as P;
     case 9:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 10:
+      return (reader.readStringList(offset)) as P;
+    case 11:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -336,6 +360,160 @@ extension ClothesDetailsQueryWhere
 
 extension ClothesDetailsQueryFilter
     on QueryBuilder<ClothesDetails, ClothesDetails, QFilterCondition> {
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'brand',
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'brand',
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'brand',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'brand',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'brand',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'brand',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      brandIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'brand',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
       categoriesIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -1820,6 +1998,90 @@ extension ClothesDetailsQueryFilter
   }
 
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'price',
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'price',
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'price',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'price',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'price',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
+      priceBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'price',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterFilterCondition>
       seasonsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -2225,6 +2487,18 @@ extension ClothesDetailsQueryLinks
 
 extension ClothesDetailsQuerySortBy
     on QueryBuilder<ClothesDetails, ClothesDetails, QSortBy> {
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByBrand() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'brand', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByBrandDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'brand', Sort.desc);
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByClothesId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clothesId', Sort.asc);
@@ -2278,6 +2552,18 @@ extension ClothesDetailsQuerySortBy
     });
   }
 
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByPrice() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'price', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByPriceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'price', Sort.desc);
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
@@ -2293,6 +2579,18 @@ extension ClothesDetailsQuerySortBy
 
 extension ClothesDetailsQuerySortThenBy
     on QueryBuilder<ClothesDetails, ClothesDetails, QSortThenBy> {
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByBrand() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'brand', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByBrandDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'brand', Sort.desc);
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByClothesId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clothesId', Sort.asc);
@@ -2358,6 +2656,18 @@ extension ClothesDetailsQuerySortThenBy
     });
   }
 
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByPrice() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'price', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByPriceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'price', Sort.desc);
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QAfterSortBy> thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
@@ -2373,6 +2683,13 @@ extension ClothesDetailsQuerySortThenBy
 
 extension ClothesDetailsQueryWhereDistinct
     on QueryBuilder<ClothesDetails, ClothesDetails, QDistinct> {
+  QueryBuilder<ClothesDetails, ClothesDetails, QDistinct> distinctByBrand(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'brand', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QDistinct>
       distinctByCategories() {
     return QueryBuilder.apply(this, (query) {
@@ -2427,6 +2744,12 @@ extension ClothesDetailsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ClothesDetails, ClothesDetails, QDistinct> distinctByPrice() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'price');
+    });
+  }
+
   QueryBuilder<ClothesDetails, ClothesDetails, QDistinct> distinctBySeasons() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'seasons');
@@ -2446,6 +2769,12 @@ extension ClothesDetailsQueryProperty
   QueryBuilder<ClothesDetails, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<ClothesDetails, String?, QQueryOperations> brandProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'brand');
     });
   }
 
@@ -2500,6 +2829,12 @@ extension ClothesDetailsQueryProperty
       occasionsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'occasions');
+    });
+  }
+
+  QueryBuilder<ClothesDetails, double?, QQueryOperations> priceProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'price');
     });
   }
 
