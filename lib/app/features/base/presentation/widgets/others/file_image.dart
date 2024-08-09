@@ -13,7 +13,6 @@ class AppFileImage extends StatelessWidget {
     try{
       return Container(
         height: height,
-        width: width,
         decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(8),
@@ -27,7 +26,6 @@ class AppFileImage extends StatelessWidget {
     }
     return Container(
       height: height,
-      width: width,
       decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(8)
