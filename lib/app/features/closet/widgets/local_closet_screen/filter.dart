@@ -7,7 +7,7 @@ class _Filter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       color: Colors.white,
       child: Row(
         children: [

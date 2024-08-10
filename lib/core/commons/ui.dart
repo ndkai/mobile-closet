@@ -196,7 +196,7 @@ class UI {
                   try{
                     UI.showLoadingDialog(context, color: null);
                     FilePickerResult? result =
-                    await FilePicker.platform.pickFiles(allowMultiple: false,
+                    await FilePicker.platform.pickFiles(allowMultiple: true,
                         type: FileType.custom,
                         allowedExtensions: ['jpg', 'png']).then((value){
                       if (value != null) {
@@ -239,8 +239,8 @@ class UI {
                   try{
                     UI.showLoadingDialog(context, color: null);
                     final ImagePicker picker = ImagePicker();
-                    await picker.pickImage(source: ImageSource.gallery).then((image){
-                      onChange([File(image!.path)]);
+                    await picker.pickMultiImage().then((images){
+                      onChange(images.map((path) => File(path.path)).toList());
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     });
@@ -259,31 +259,31 @@ class UI {
                   ),
                 ),
               ),
-              CupertinoActionSheetAction(
-                onPressed: () async {
-                  try{
-                    UI.showLoadingDialog(context, color: null);
-                    final ImagePicker picker = ImagePicker();
-                    await picker.pickImage(source: ImageSource.camera).then((image){
-                      onChange([File(image!.path)]);
-                                          Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    });
-                  } catch(e){
-                    Navigator.of(context).pop();
-                  }
-
-                },
-                child: const Text(
-                  'Camera',
-                  style: TextStyle(
-                    color: Color(0xFF141B31),
-                    fontSize: 16,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
+              // CupertinoActionSheetAction(
+              //   onPressed: () async {
+              //     try{
+              //       UI.showLoadingDialog(context, color: null);
+              //       final ImagePicker picker = ImagePicker();
+              //       await picker.pickImage(source: ImageSource.camera).then((image){
+              //         onChange([File(image!.path)]);
+              //                             Navigator.of(context).pop();
+              //         Navigator.of(context).pop();
+              //       });
+              //     } catch(e){
+              //       Navigator.of(context).pop();
+              //     }
+              //
+              //   },
+              //   child: const Text(
+              //     'Camera',
+              //     style: TextStyle(
+              //       color: Color(0xFF141B31),
+              //       fontSize: 16,
+              //       fontFamily: 'Roboto',
+              //       fontWeight: FontWeight.w500,
+              //     ),
+              //   ),
+              // ),
             ],
             cancelButton: Container(
               color: Colors.white,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:clean_architechture/app/features/base/presentation/widgets/otp_pin_field/otp_pin_field.dart';
@@ -30,8 +31,8 @@ class AddNewClothesDialog extends StatefulWidget {
 
 class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
   int selectedSlider = 1;
-  Clothes newClothes = Clothes();
-  File? image;
+  List<Clothes> newClothes = [];
+  List<File> images = [];
   String error = "";
 
   @override
@@ -75,7 +76,7 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                     builder: (context, state) {
                       return PositiveButton(
                           onTap: () async {
-                            if(newClothes.filePath == null){
+                            if(images.isEmpty){
                               setState(() {
                                 error = "At least you should choose an image";
                               });
@@ -85,15 +86,26 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                               error = "";
                             });
                             UI.showLoadingDialog(context, color: null);
-                            newClothes.filePath = await Helper.saveFile("clothes",image!.path.split("/").last, image!);
-                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                              print("asdasdasd ${widget.closetId}");
-                              if(widget.closetId != null){
-                                newClothes.closetId = [widget.closetId!];
+                            final completer = _UpdateClothesCompleter(() async {
+                              for(var i = 0; i < newClothes.length; i++){
+                                newClothes[i].filePath = await Helper.saveFile("clothes",images[i].path.split("/").last, images[i]);
+                                if(widget.closetId != null){
+                                  if(newClothes[i].closetId == null){
+                                    newClothes[i].closetId = [widget.closetId ?? -1];
+                                  } else {
+                                    newClothes[i].closetId!.add(widget.closetId ?? -1);
+                                  }
+
+                                }
+                                context.read<CreateClothesBloc>().add(CreateClothesEvent(newClothes[i]));
+
                               }
-                              context.read<CreateClothesBloc>().add(CreateClothesEvent(newClothes));
-                              Navigator.pop(context);
+                            })..init();
+                            await completer.isReady.then((value) async {
+                              await Future.delayed(const Duration(seconds: 1));
+                              Navigator.pop(context);Navigator.pop(context);
                             });
+
                           },
                           width: SizeConfig.screenWidth!,
                           height: SizeConfig.screenWidth! * 0.12,
@@ -101,8 +113,7 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                     },
                     listener: (context, state) {
                       if(state is ClothesCreateSuccessState){
-                        UI.showSuccessToast(context, "Create clothes successfully");
-                        Navigator.pop(context);
+                        // UI.showSuccessToast(context, "Create clothes successfully");
                       }
                     }),
                 const Gap(16),
@@ -115,12 +126,12 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
   }
 
   Widget _handleAddClothes() {
-    if (newClothes.filePath != null) {
+    if (images.isNotEmpty) {
       return Column(
         children: [
           // Text("$selectedSlider/${newClothes.length}", style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12)), overflow: TextOverflow.ellipsis,),
           // const Gap(6),
-          _imageBuilder(newClothes)
+          _imageBuilder()
         ],
       );
     }
@@ -148,17 +159,17 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
     ).onClick(() {
       UI.showChooseFileMethodsSheet(context, onChange: (value) {
         setState(() {
-          newClothes.filePath = value.first.path;
-          image = value.first;
+          newClothes.addAll(value.map((e) => Clothes()..filePath = e.path).toList());
+          images = value;
         });
       });
     });
   }
 
-  Widget _imageBuilder(Clothes clothes) {
+  Widget _imageBuilder() {
     return Column(
       children: [
-        Container(
+        CarouselSlider(items: images.map((e) => Container(
           width: MediaQuery.of(context).size.width,
           height: 130,
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -166,7 +177,7 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
               color: Colors.grey.withOpacity(.2),
               borderRadius: BorderRadius.circular(8),
               image:
-                  DecorationImage(image: FileImage(File(clothes.filePath!)))),
+              DecorationImage(image: FileImage(e))),
           child: const CircleAvatar(
             radius: 14,
             backgroundColor: Colors.red,
@@ -179,11 +190,12 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
             ),
           ).align(Alignment.topRight).onClick(() {
             setState(() {
-              newClothes.filePath = null;
-              image = null;
+              // newClothes.remove(value) = null;
+              // image = null;
             });
           }),
-        ),
+        )).toList(), options: CarouselOptions(),),
+
         // const Gap(8),
         // TextFormField(onChanged: (s){}, controller: clothes.controller, textAlign: TextAlign.center, decoration: const InputDecoration(
         //   hintText: "Give it a name",
@@ -303,5 +315,21 @@ class _BuildCategoriesState extends State<_BuildCategories> {
         });
       }),
     );
+  }
+}
+
+
+class _UpdateClothesCompleter{
+  final Function action;
+
+  _UpdateClothesCompleter(this.action);
+
+  final Completer<bool> _comp = Completer<bool>();
+
+  Future<bool> get isReady => _comp.future;
+
+  Future<void> init() async {
+    final result = await action();
+    _comp.complete(true);
   }
 }

@@ -34,7 +34,7 @@ class _LocalRootViewState extends State<_LocalRootView> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-      //   IndexedStack(
+          //   IndexedStack(
       //   index: currentIndex,
       //   children: _pages,
       // ),
@@ -101,14 +101,14 @@ class _LocalRootViewState extends State<_LocalRootView> {
 
   Widget _getCurrentPage() {
     setState(() {});
-
     return IndexedStack(
       index: currentIndex,
       children: const [
         HomeScreen(),
         ItemsScreen(),
-        CategoryManageScreen(),
-        CategoryManageScreen(),
+        ItemsScreen(),
+        HomeScreen(),
+        OutfitCreationScreen(),
       ],
     );
   }

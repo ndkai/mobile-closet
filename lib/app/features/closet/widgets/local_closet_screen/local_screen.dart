@@ -27,9 +27,11 @@ class _LocalScreen extends StatelessWidget {
 
             ],
           ),
+          backgroundColor: Colors.white70,
           body: Column(
             children: [
               _Filter(closet: closet,),
+              const Gap(8),
               _Clothes(closet: closet,),
                BlocListener<DeleteClothesBloc, ClothesState>(
                 listener: (context, state){

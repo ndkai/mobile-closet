@@ -11,6 +11,7 @@ import '../../../../../generated/assets.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../closet/pages/items_screen.dart';
 import '../../../home/presentation/pages/home_screen.dart';
+import '../../../outfit/presentation/pages/outfit_creation_screen.dart';
 import '../widgets/bottom_nav/nav_bar.dart';
 import '../widgets/bottom_nav/nav_item.dart';
 import '../widgets/dialogs/confirm_dialog_builder.dart';
