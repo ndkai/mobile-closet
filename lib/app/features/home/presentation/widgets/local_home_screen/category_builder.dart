@@ -16,7 +16,7 @@ class _CategoryState extends State<_Category> {
       children: [
         BlocListener<CreateClosetBloc, ClosetState>(
           listener: (context, state) {
-            print("CreateClosetBloc ${state}");
+
             if (state is ClosetCreateSuccessState) {
               // Navigator.pop(context);
               context.read<GetClosetBloc>().add(GetClosetListEvent());
@@ -42,6 +42,7 @@ class _CategoryState extends State<_Category> {
           List<Closet> closet = [];
           if (state is ClosetGetSuccessState) {
             closet = state.closet;
+
           }
           return GridView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -61,6 +62,7 @@ class _CategoryState extends State<_Category> {
               return _closetItem(context, closet[index]);
             },
           );
+
         }),
       ],
     );
@@ -98,7 +100,7 @@ class _CategoryState extends State<_Category> {
                                       color: Colors.grey.withOpacity(.2),
                                       borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(8))),
-                                  child: paths[0]!= "" ? Image.file(File(paths[0])) : SizedBox(height: 100,),
+                                  child: paths[0]!= "" ? Image.file(File(paths[0])) : const SizedBox(height: 100,),
                                      )),
                           const Gap(2),
                           Expanded(
@@ -108,7 +110,7 @@ class _CategoryState extends State<_Category> {
                                 color: Colors.blueGrey.withOpacity(.2),
                                 borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(8))),
-                                child: paths[1]!= "" ? Image.file(File(paths[1])) : SizedBox(height: 100,),
+                                child: paths[1]!= "" ? Image.file(File(paths[1])) : const SizedBox(height: 100,),
                           )),
                         ],
                       )),
@@ -123,7 +125,7 @@ class _CategoryState extends State<_Category> {
                                 color: Colors.blueGrey.withOpacity(.2),
                                 borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(8))),
-                                child: paths[2]!= "" ? Image.file(File(paths[2])) : SizedBox(height: 100,),
+                                child: paths[2]!= "" ? Image.file(File(paths[2])) : const SizedBox(height: 100,),
                           )),
                           const Gap(2),
                           Expanded(
@@ -133,7 +135,7 @@ class _CategoryState extends State<_Category> {
                                 color: Colors.grey.withOpacity(.2),
                                 borderRadius: const BorderRadius.only(
                                     bottomRight: Radius.circular(8))),
-                                child: paths[3] != "" ? Image.file(File(paths[3])) : SizedBox(height: 100,),
+                                child: paths[3] != "" ? Image.file(File(paths[3])) : const SizedBox(height: 100,),
                           )),
                         ],
                       ))
@@ -152,6 +154,7 @@ class _CategoryState extends State<_Category> {
               ],
             );
           }
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -224,10 +227,13 @@ class _CategoryState extends State<_Category> {
           );
         },
       ),
-    ).onClick(() => Navigator.of(context).push(MaterialPageRoute(
+    ).onClick(() async => await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => ClosetScreen(
               closet: closet,
-            ))));
+            ))).then((value) {
+              print("??/");
+              context.read<GetClosetBloc>().add(GetClosetListEvent());
+    }));
   }
 
   Widget _addNew(BuildContext context) {

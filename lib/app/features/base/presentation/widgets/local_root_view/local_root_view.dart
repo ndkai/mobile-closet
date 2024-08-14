@@ -89,7 +89,7 @@ class _LocalRootViewState extends State<_LocalRootView> {
   void _navAction(int index) {
     switch (index) {
       case 2:
-        context.push(AppRoutes.openAccountScreen);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OutfitCreationScreen()));
     }
   }
 
