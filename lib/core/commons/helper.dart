@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 class Helper{
 
   static bool isTokenExpired(int expiryTimestamp) {
@@ -65,6 +67,31 @@ class Helper{
     try {
       await currentFile.writeAsBytes(saveFile);
       return currentFile.path;
+    } catch (e) {
+      print('Error saving file: $e');
+      return null;
+    }
+  }
+
+  static Future<String?> saveScreenShot(ScreenshotController screenshotController, String name) async {
+    try {
+
+      late File customFile;
+      await screenshotController
+          .capture()
+          .then((capturedImage) async {
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/$name';
+        Directory targetDir = Directory(filePath);
+        if (!targetDir.existsSync()) {
+          await targetDir.create(recursive: true);
+        }
+        customFile = await File("$filePath/${DateTime
+            .now()
+            .millisecondsSinceEpoch}.png").writeAsBytes(capturedImage as List<int>);
+      });
+      print("saveScreenShot: ${customFile.path}");
+      return customFile.path;
     } catch (e) {
       print('Error saving file: $e');
       return null;

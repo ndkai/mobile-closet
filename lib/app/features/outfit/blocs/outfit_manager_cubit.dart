@@ -24,7 +24,7 @@ class OutfitManagerCubit extends Cubit<List<OutfitManagerState>> {
 }
 
 class CurrentOutfitCubit extends Cubit<int> {
-  CurrentOutfitCubit() : super(0);
+  CurrentOutfitCubit() : super(-1);
   int currentItem = -1;
 
   void addItem(int value){

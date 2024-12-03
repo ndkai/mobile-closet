@@ -88,7 +88,7 @@ class _AddNewClothesDialogState extends State<AddNewClothesDialog> {
                             UI.showLoadingDialog(context, color: null);
                             final completer = _UpdateClothesCompleter(() async {
                               for(var i = 0; i < newClothes.length; i++){
-                                newClothes[i].filePath = await Helper.saveFile("clothes",images[i].path.split("/").last, images[i]);
+                                // newClothes[i].filePath = await Helper.saveFile("clothes",images[i].path.split("/").last, images[i]);
                                 if(widget.closetId != null){
                                   if(newClothes[i].closetId == null){
                                     newClothes[i].closetId = [widget.closetId ?? -1];

@@ -25,10 +25,11 @@ dependencies:
   toastification: ^2.0.0
   html: ^0.15.4
   flutter_html: any
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   loadmore: ^2.0.1
   measure_size_builder: ^1.0.3
   fl_chart: ^0.68.0
+  screenshot: ^3.0.0
   #go_router
   go_router: ^13.2.3
   #theme

@@ -2,12 +2,14 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:clean_architechture/config/size/size_config.dart';
+import 'package:clean_architechture/core/commons/helper.dart';
 import 'package:clean_architechture/core/extensions/widget_extension.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 import '../../../../../core/services/di_service.dart';
@@ -15,6 +17,7 @@ import '../../../../../core/services/isar/schemas/closet.dart';
 import '../../../closet/manager/closet/closet_bloc.dart';
 import '../../../closet/manager/clothes/clothes_bloc.dart';
 import '../../blocs/outfit_manager_cubit.dart';
+import 'outfit_input_info_screen.dart';
 
 class OutfitCreationScreen extends StatelessWidget {
   const OutfitCreationScreen({super.key});
@@ -22,6 +25,7 @@ class OutfitCreationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BuildContext clothesContext = context;
+    ScreenshotController screenshotController = ScreenshotController();
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -43,24 +47,32 @@ class OutfitCreationScreen extends StatelessWidget {
             surfaceTintColor: Colors.white,
             centerTitle: true,
             title: Text(
-              "Your closet",
+              "",
               style: GoogleFonts.montserratAlternates(
                   textStyle: const TextStyle(
                       color: Colors.blue, fontWeight: FontWeight.w700)),
             ),
             actions: [
-              const Icon(Icons.more_vert)
-                  .padding(const EdgeInsets.only(left: 16)),
+              Text(
+                "Next",
+                style: GoogleFonts.montserratAlternates(
+                    textStyle: const TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 16)),
+              ).onClick(() async {
+                final filePath = await Helper.saveScreenShot(screenshotController, "outfit");
+                Navigator.push(context, MaterialPageRoute(builder: (_) => OutfitInputInfoScreen(filePath: filePath)));
+              }),
+              const Gap(16)
             ],
           ),
           backgroundColor: Colors.white,
           body: Column(
             children: [
               Expanded(
-                  child: Container(
+                  child: Screenshot(controller: screenshotController, child: Container(
                       width: SizeConfig.screenWidth,
                       color: Colors.white,
-                      child: DraggableWidgetArea())),
+                      child: const DraggableWidgetArea()))),
               BlocBuilder<CurrentOutfitCubit, int>(
                   builder: (context, state) {
                 if (state == -1) {
