@@ -36,7 +36,7 @@ class OutfitInputInfoScreen extends StatelessWidget {
               textStyle: const TextStyle(
                   color: Colors.blue, fontWeight: FontWeight.w700)),
         ),
-        actions: [
+        actions: const [
           // Text(
           //   "Next",
           //   style: GoogleFonts.montserratAlternates(
@@ -45,7 +45,7 @@ class OutfitInputInfoScreen extends StatelessWidget {
           // ).onClick((){
           //   Helper.saveScreenShot(screenshotController, "outfit");
           // }),
-          const Gap(16)
+          Gap(16)
         ],
       ),
       backgroundColor: Colors.white,
